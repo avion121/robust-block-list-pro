@@ -1,9 +1,12 @@
 name: Update Robust Block List Pro
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '0 5 * * *'  # Runs daily at 5 AM UTC
-  workflow_dispatch:    # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   build:
@@ -12,6 +15,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -31,7 +37,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add robust_block_list_pro.txt
-          # Commit only if there are changes
           if ! git diff-index --quiet HEAD; then
             git commit -m "Update robust block list pro"
             git push
