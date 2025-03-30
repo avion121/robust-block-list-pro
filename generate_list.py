@@ -39,28 +39,30 @@ def fetch_url(url):
         return ""
 
 def main():
-    # Use a set to remove duplicate lines
+    # Header metadata for Brave/uBlock-style lists
+    header_lines = [
+        "! Title: Robust Block List Pro",
+        "! Description: Combined block list from multiple sources"
+    ]
+    header = "\n".join(header_lines)
+    
+    # Use a set to remove duplicate lines; filter out any header lines from sources.
     combined_lines = set()
-    header = "# Robust Block List Pro\n# Combined from multiple sources\n"
-    # Ensure header appears at the top
-    combined_lines.add(header.strip())
     
     for url in urls:
         print(f"Fetching: {url}")
         content = fetch_url(url)
         if content:
             for line in content.splitlines():
-                if line.strip():
-                    combined_lines.add(line.strip())
+                line_clean = line.strip()
+                if line_clean and line_clean not in header_lines:
+                    combined_lines.add(line_clean)
     
-    # Write sorted combined list to file
+    # Write the file with the header first and then the rest of the sorted list
     with open("robust_block_list_pro.txt", "w", encoding="utf-8") as f:
-        # Write header first then the rest of the sorted lines
-        f.write(header + "\n")
+        f.write(header + "\n\n")
         for line in sorted(combined_lines):
-            # Skip the header duplicate if already added
-            if line != header.strip():
-                f.write(line + "\n")
+            f.write(line + "\n")
     
     print("List generated: robust_block_list_pro.txt")
 
