@@ -41,23 +41,26 @@ def fetch_url(url):
 def main():
     # Use a set to remove duplicate lines
     combined_lines = set()
-    # Add header
     header = "# Robust Block List Pro\n# Combined from multiple sources\n"
-    combined_lines.add(header)
+    # Ensure header appears at the top
+    combined_lines.add(header.strip())
     
     for url in urls:
         print(f"Fetching: {url}")
         content = fetch_url(url)
         if content:
             for line in content.splitlines():
-                # Only add non-empty lines
                 if line.strip():
                     combined_lines.add(line.strip())
     
     # Write sorted combined list to file
     with open("robust_block_list_pro.txt", "w", encoding="utf-8") as f:
+        # Write header first then the rest of the sorted lines
+        f.write(header + "\n")
         for line in sorted(combined_lines):
-            f.write(line + "\n")
+            # Skip the header duplicate if already added
+            if line != header.strip():
+                f.write(line + "\n")
     
     print("List generated: robust_block_list_pro.txt")
 
