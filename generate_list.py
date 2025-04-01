@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-import re
 import requests
-import uuid
 from datetime import datetime
 
 # List of source URLs for block lists
@@ -30,14 +28,14 @@ URLS = [
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt"
 ]
 
-# Base header for the robust block list
+# Base header metadata for the block list
 BASE_HEADER_LINES = [
     "! Title: Robust Block List Pro",
     "! Description: Combined block list from multiple sources"
 ]
 
 def fetch_url(url):
-    """Fetch content from URL; return text or empty string if error."""
+    """Fetch the content from a URL and return the text, or an empty string if failed."""
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
@@ -46,82 +44,8 @@ def fetch_url(url):
         print(f"Error fetching {url}: {e}")
         return ""
 
-def extract_domain(line):
-    """
-    Extract a domain from an adblock rule.
-    For example, converts:
-      ||example.com^   to   example.com
-    """
-    match = re.match(r"^\|\|([^\^\/]+)\^", line)
-    if match:
-        return match.group(1)
-    return None
-
-def generate_mobileconfig(domains, output_filename):
-    """
-    Generate an iOS mobileconfig file using the full list of domains.
-    """
-    subset = sorted(domains)  # full list, no limit
-    supplemental_domains = "\n            ".join([f"<string>{d}</string>" for d in subset])
-    
-    # Generate unique UUIDs for the profile payloads
-    uuid1 = str(uuid.uuid4())
-    uuid2 = str(uuid.uuid4())
-    
-    mobileconfig_template = f"""<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>PayloadContent</key>
-    <array>
-      <dict>
-        <key>DNSSettings</key>
-        <dict>
-          <!-- Specify your preferred DNS servers -->
-          <key>ServerAddresses</key>
-          <array>
-            <string>94.140.14.14</string>
-            <string>94.140.15.15</string>
-          </array>
-          <!-- SupplementalMatchDomains from the blocklist -->
-          <key>SupplementalMatchDomains</key>
-          <array>
-            {supplemental_domains}
-          </array>
-        </dict>
-        <key>PayloadIdentifier</key>
-        <string>com.yourcompany.dnsconfig</string>
-        <key>PayloadType</key>
-        <string>com.apple.dnsSettings.managed</string>
-        <key>PayloadUUID</key>
-        <string>{uuid1}</string>
-        <key>PayloadVersion</key>
-        <integer>1</integer>
-      </dict>
-    </array>
-    <key>PayloadDisplayName</key>
-    <string>Robust DNS Profile</string>
-    <key>PayloadIdentifier</key>
-    <string>com.yourcompany.robustdns</string>
-    <key>PayloadUUID</key>
-    <string>{uuid2}</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-    <key>PayloadType</key>
-    <string>Configuration</string>
-  </dict>
-</plist>
-"""
-    try:
-        with open(output_filename, "w", encoding="utf-8") as f:
-            f.write(mobileconfig_template)
-        print(f"Mobileconfig generated successfully: {output_filename}")
-    except IOError as e:
-        print(f"Error writing to {output_filename}: {e}")
-
 def main():
-    robust_lines = []   # For the full robust block list (all lines)
-    domain_set = set()  # For the DNS-compatible domain list
+    combined_lines = set()
     
     for url in URLS:
         print(f"Fetching: {url}")
@@ -129,44 +53,32 @@ def main():
         if content:
             for line in content.splitlines():
                 line_clean = line.strip()
-                # Save every non-empty line for the robust block list
-                if line_clean:
-                    robust_lines.append(line_clean)
-                # For domain extraction, ignore comments and empty lines
-                if line_clean.startswith("!") or not line_clean:
-                    continue
-                domain = extract_domain(line_clean)
-                if domain:
-                    domain_set.add(domain)
+                # Skip empty lines and lines already included in the header
+                if line_clean and line_clean not in BASE_HEADER_LINES:
+                    combined_lines.add(line_clean)
     
-    # --- Part A: Write the full robust block list with header ---
-    total_items = len(set(robust_lines))
+    total_count = len(combined_lines)
     now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+
+    # Construct header with metadata
     header_lines = BASE_HEADER_LINES + [
-        f"! Total Blocked Items: {total_items}",
+        f"! Total Blocked Items: {total_count}",
         f"! Updated: {now}"
     ]
-    robust_content = "\n".join(header_lines) + "\n\n" + "\n".join(sorted(set(robust_lines))) + "\n"
-    robust_filename = "robust_block_list_pro.txt"
-    try:
-        with open(robust_filename, "w", encoding="utf-8") as f:
-            f.write(robust_content)
-        print(f"Robust block list generated: {robust_filename}")
-    except IOError as e:
-        print(f"Error writing to {robust_filename}: {e}")
+    header = "\n".join(header_lines)
     
-    # --- Part B: Write the full DNS-compatible domain list ---
-    dns_filename = "dns-blocklist.txt"
-    try:
-        with open(dns_filename, "w", encoding="utf-8") as f:
-            f.write("\n".join(sorted(domain_set)) + "\n")
-        print(f"DNS blocklist generated: {dns_filename}")
-    except IOError as e:
-        print(f"Error writing to {dns_filename}: {e}")
+    # Prepare final sorted list content
+    sorted_lines = sorted(combined_lines)
+    final_content = header + "\n\n" + "\n".join(sorted_lines) + "\n"
     
-    # --- Part C: Generate the mobileconfig file using the full domain list ---
-    mobileconfig_filename = "robust-dns-profile.mobileconfig"
-    generate_mobileconfig(domain_set, mobileconfig_filename)
+    # Write the formatted list to file
+    output_filename = "robust_block_list_pro.txt"
+    try:
+        with open(output_filename, "w", encoding="utf-8") as f:
+            f.write(final_content)
+        print(f"List generated successfully: {output_filename}")
+    except IOError as e:
+        print(f"Error writing to {output_filename}: {e}")
 
 if __name__ == "__main__":
     main()
