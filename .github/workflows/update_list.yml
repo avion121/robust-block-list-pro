@@ -16,6 +16,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: false
 
+      - name: List Repository Files (Debug)
+        run: ls -la
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -27,7 +30,7 @@ jobs:
           pip install requests
 
       - name: Run the Generation Script
-        run: python generate_lists.py
+        run: python ./generate_lists.py
 
       - name: Commit and Push Changes
         env:
