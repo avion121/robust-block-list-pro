@@ -105,7 +105,7 @@ def generate_mobileconfig(output_filename, dns_servers):
     }
 
     with open(output_filename, 'wb') as fp:
-        plistlib.dump(config, fp)
+        plistlib.dump(config, fp, fmt=plistlib.FMT_XML)
 
     print(f"DNS profile generated successfully: {output_filename}")
 
