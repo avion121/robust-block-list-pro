@@ -1,7 +1,6 @@
+#!/usr/bin/env python3
 import requests
 from datetime import datetime
-import plistlib
-import uuid
 
 # List of source URLs for block lists
 URLS = [
@@ -45,9 +44,9 @@ def fetch_url(url):
         print(f"Error fetching {url}: {e}")
         return ""
 
-def generate_block_list():
+def main():
     combined_lines = set()
-
+    
     for url in URLS:
         print(f"Fetching: {url}")
         content = fetch_url(url)
@@ -57,7 +56,7 @@ def generate_block_list():
                 # Skip empty lines and lines already included in the header
                 if line_clean and line_clean not in BASE_HEADER_LINES:
                     combined_lines.add(line_clean)
-
+    
     total_count = len(combined_lines)
     now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
@@ -67,11 +66,11 @@ def generate_block_list():
         f"! Updated: {now}"
     ]
     header = "\n".join(header_lines)
-
+    
     # Prepare final sorted list content
     sorted_lines = sorted(combined_lines)
     final_content = header + "\n\n" + "\n".join(sorted_lines) + "\n"
-
+    
     # Write the formatted list to file
     output_filename = "robust_block_list_pro.txt"
     try:
@@ -80,43 +79,6 @@ def generate_block_list():
         print(f"List generated successfully: {output_filename}")
     except IOError as e:
         print(f"Error writing to {output_filename}: {e}")
-
-def generate_mobileconfig(output_filename, dns_servers):
-    """Generate a .mobileconfig file for DNS settings."""
-    config = {
-        'PayloadContent': [
-            {
-                'PayloadType': 'com.apple.dnsSettings.managed',
-                'PayloadVersion': 1,
-                'PayloadIdentifier': 'com.example.dns',
-                'PayloadUUID': str(uuid.uuid4()),
-                'PayloadDisplayName': 'Robust Block List Pro DNS',
-                'DNSSettings': {
-                    'DNSProtocol': 'TLS',
-                    'ServerAddresses': dns_servers,
-                }
-            }
-        ],
-        'PayloadType': 'Configuration',
-        'PayloadVersion': 1,
-        'PayloadIdentifier': 'com.example.dns.profile',
-        'PayloadUUID': str(uuid.uuid4()),
-        'PayloadDisplayName': 'Robust Block List Pro DNS Profile',
-    }
-
-    with open(output_filename, 'wb') as fp:
-        plistlib.dump(config, fp, fmt=plistlib.FMT_XML)
-
-    print(f"DNS profile generated successfully: {output_filename}")
-
-def main():
-    # Generate the block list
-    generate_block_list()
-
-    # Generate the DNS profile
-    dns_servers = ["1.1.1.1", "1.0.0.1"]  # Example DNS servers
-    mobileconfig_filename = "robust_block_list_pro_dns.mobileconfig"
-    generate_mobileconfig(mobileconfig_filename, dns_servers)
 
 if __name__ == "__main__":
     main()
