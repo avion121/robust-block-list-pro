@@ -41,7 +41,7 @@ Robust Block List Pro consolidates multiple block lists into a single, comprehen
 
 ### Clone the Repository
 
-```bash
+
 git clone https://github.com/your-username/robust-block-list-pro.git
 cd robust-block-list-pro
 GitHub Actions
