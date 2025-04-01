@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 # List of source URLs
 urls = [
@@ -39,12 +40,11 @@ def fetch_url(url):
         return ""
 
 def main():
-    # Header metadata for Brave/uBlock-style lists
-    header_lines = [
+    # Base header metadata for Brave/uBlock-style lists
+    base_header_lines = [
         "! Title: Robust Block List Pro",
         "! Description: Combined block list from multiple sources"
     ]
-    header = "\n".join(header_lines)
     
     # Use a set to remove duplicate lines; filter out any header lines from sources.
     combined_lines = set()
@@ -55,10 +55,22 @@ def main():
         if content:
             for line in content.splitlines():
                 line_clean = line.strip()
-                if line_clean and line_clean not in header_lines:
+                # Skip empty lines and lines that match our base header
+                if line_clean and line_clean not in base_header_lines:
                     combined_lines.add(line_clean)
     
-    # Write the file with the header first and then the rest of the sorted list
+    # Get current UTC date and time
+    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    total_count = len(combined_lines)
+    
+    # Create header with additional info
+    header_lines = base_header_lines + [
+        f"! Total Blocked Items: {total_count}",
+        f"! Updated: {now}"
+    ]
+    header = "\n".join(header_lines)
+    
+    # Write the file with the header first and then the sorted list of blocked items
     with open("robust_block_list_pro.txt", "w", encoding="utf-8") as f:
         f.write(header + "\n\n")
         for line in sorted(combined_lines):
