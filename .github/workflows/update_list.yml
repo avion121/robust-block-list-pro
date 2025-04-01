@@ -30,7 +30,7 @@ jobs:
           pip install requests
 
       - name: Run the Generation Script
-        run: python ./generate_lists.py
+        run: python ./generate_list.py
 
       - name: Commit and Push Changes
         env:
