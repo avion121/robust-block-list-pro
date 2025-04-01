@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
 import requests
 from datetime import datetime
 
-# List of source URLs
-urls = [
+# List of source URLs for block lists
+URLS = [
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/filters.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/badware.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/privacy.txt",
@@ -27,56 +28,57 @@ urls = [
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt"
 ]
 
+# Base header metadata for the block list
+BASE_HEADER_LINES = [
+    "! Title: Robust Block List Pro",
+    "! Description: Combined block list from multiple sources"
+]
+
 def fetch_url(url):
+    """Fetch the content from a URL and return the text, or an empty string if failed."""
     try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.text
-        else:
-            print(f"Failed to fetch {url} (Status: {response.status_code})")
-            return ""
-    except Exception as e:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.text
+    except requests.RequestException as e:
         print(f"Error fetching {url}: {e}")
         return ""
 
 def main():
-    # Base header metadata for Brave/uBlock-style lists
-    base_header_lines = [
-        "! Title: Robust Block List Pro",
-        "! Description: Combined block list from multiple sources"
-    ]
-    
-    # Use a set to remove duplicate lines; filter out any header lines from sources.
     combined_lines = set()
     
-    for url in urls:
+    for url in URLS:
         print(f"Fetching: {url}")
         content = fetch_url(url)
         if content:
             for line in content.splitlines():
                 line_clean = line.strip()
-                # Skip empty lines and lines that match our base header
-                if line_clean and line_clean not in base_header_lines:
+                # Skip empty lines and lines already included in the header
+                if line_clean and line_clean not in BASE_HEADER_LINES:
                     combined_lines.add(line_clean)
     
-    # Get current UTC date and time
-    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
     total_count = len(combined_lines)
-    
-    # Create header with additional info
-    header_lines = base_header_lines + [
+    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+
+    # Construct header with metadata
+    header_lines = BASE_HEADER_LINES + [
         f"! Total Blocked Items: {total_count}",
         f"! Updated: {now}"
     ]
     header = "\n".join(header_lines)
     
-    # Write the file with the header first and then the sorted list of blocked items
-    with open("robust_block_list_pro.txt", "w", encoding="utf-8") as f:
-        f.write(header + "\n\n")
-        for line in sorted(combined_lines):
-            f.write(line + "\n")
+    # Prepare final sorted list content
+    sorted_lines = sorted(combined_lines)
+    final_content = header + "\n\n" + "\n".join(sorted_lines) + "\n"
     
-    print("List generated: robust_block_list_pro.txt")
+    # Write the formatted list to file
+    output_filename = "robust_block_list_pro.txt"
+    try:
+        with open(output_filename, "w", encoding="utf-8") as f:
+            f.write(final_content)
+        print(f"List generated successfully: {output_filename}")
+    except IOError as e:
+        print(f"Error writing to {output_filename}: {e}")
 
 if __name__ == "__main__":
     main()
