@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 import plistlib
+import uuid
 
 # List of source URLs for block lists
 URLS = [
@@ -88,7 +89,7 @@ def generate_mobileconfig(output_filename, dns_servers):
                 'PayloadType': 'com.apple.dnsSettings.managed',
                 'PayloadVersion': 1,
                 'PayloadIdentifier': 'com.example.dns',
-                'PayloadUUID': 'unique-uuid-here',
+                'PayloadUUID': str(uuid.uuid4()),
                 'PayloadDisplayName': 'Robust Block List Pro DNS',
                 'DNSSettings': {
                     'DNSProtocol': 'TLS',
@@ -99,7 +100,7 @@ def generate_mobileconfig(output_filename, dns_servers):
         'PayloadType': 'Configuration',
         'PayloadVersion': 1,
         'PayloadIdentifier': 'com.example.dns.profile',
-        'PayloadUUID': 'unique-uuid-here',
+        'PayloadUUID': str(uuid.uuid4()),
         'PayloadDisplayName': 'Robust Block List Pro DNS Profile',
     }
 
