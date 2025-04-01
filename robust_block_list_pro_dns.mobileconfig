@@ -22,7 +22,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.dnsSettings.managed</string>
 			<key>PayloadUUID</key>
-			<string>unique-uuid-here</string>
+			<string>c5323f9f-7f80-4bcf-b966-685c3b6f809c</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -34,7 +34,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>unique-uuid-here</string>
+	<string>61d38986-f062-40cc-82c9-c97979b30ea8</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>
