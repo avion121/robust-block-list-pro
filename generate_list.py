@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import requests
 from datetime import datetime
-import plistlib
 
 # List of source URLs for block lists
 URLS = [
@@ -45,34 +44,6 @@ def fetch_url(url):
         print(f"Error fetching {url}: {e}")
         return ""
 
-def generate_mobileconfig(output_filename, dns_servers):
-    """Generate a .mobileconfig file for DNS configuration."""
-    config = {
-        'PayloadContent': [
-            {
-                'PayloadType': 'DNS',
-                'PayloadVersion': 1,
-                'PayloadIdentifier': 'com.example.dns',
-                'PayloadUUID': 'unique-uuid-here',
-                'PayloadDisplayName': 'Robust Block List Pro DNS',
-                'DNSSettings': {
-                    'DNSProtocol': 'DNS',
-                    'ServerAddresses': dns_servers,
-                }
-            }
-        ],
-        'PayloadType': 'Configuration',
-        'PayloadVersion': 1,
-        'PayloadIdentifier': 'com.example.dns.profile',
-        'PayloadUUID': 'unique-uuid-here',
-        'PayloadDisplayName': 'Robust Block List Pro DNS Profile',
-    }
-
-    with open(output_filename, 'wb') as f:
-        plistlib.dump(config, f)
-
-    print(f"DNS profile generated successfully: {output_filename}")
-
 def main():
     combined_lines = set()
 
@@ -108,13 +79,6 @@ def main():
         print(f"List generated successfully: {output_filename}")
     except IOError as e:
         print(f"Error writing to {output_filename}: {e}")
-
-    # Define DNS servers to block
-    dns_servers = ["1.1.1.1", "8.8.8.8"]  # Example DNS servers
-
-    # Generate the DNS profile
-    mobileconfig_filename = "robust_block_list_pro.mobileconfig"
-    generate_mobileconfig(mobileconfig_filename, dns_servers)
 
 if __name__ == "__main__":
     main()
