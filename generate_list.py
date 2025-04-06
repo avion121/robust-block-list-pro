@@ -14,7 +14,7 @@ URLS = [
     "https://feodotracker.abuse.ch/downloads/ipblocklist.txt",
     "https://ransomwaretracker.abuse.ch/blocklist/",
     "https://urlhaus.abuse.ch/downloads/hostfile/",
-    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&mimetype=plaintext",
+    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt",
     "https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/alternates/fakenews-gambling/hosts",
     "https://big.oisd.nl",
