@@ -40,8 +40,7 @@ BASE_HEADER_LINES = [
 
 # Regular expression patterns to match potential secrets
 SECRET_PATTERNS = [
-    re.compile(r'IBM SoftLayer API Key'),
-    re.compile(r'IBM Cloud IAM Key')
+    re.compile(r'[a-zA-Z0-9]{40,60}'),  # Matches IBM SoftLayer API Key and IBM Cloud IAM Key
 ]
 
 def fetch_url(url):
