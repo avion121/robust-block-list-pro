@@ -41,6 +41,8 @@ BASE_HEADER_LINES = [
 # Regular expression patterns to match potential secrets
 SECRET_PATTERNS = [
     re.compile(r'[a-zA-Z0-9]{40,60}'),  # Matches IBM SoftLayer API Key and IBM Cloud IAM Key
+    re.compile(r'apikey', re.IGNORECASE),  # Matches the word 'apikey'
+    re.compile(r'IBM', re.IGNORECASE),  # Matches the word 'IBM'
 ]
 
 def fetch_url(url):
@@ -55,6 +57,7 @@ def fetch_url(url):
 
 def main():
     combined_lines = set()
+    filtered_lines = []
 
     for url in URLS:
         print(f"Fetching: {url}")
@@ -67,6 +70,8 @@ def main():
                     # Filter out lines containing potential secrets
                     if not any(pattern.search(line_clean) for pattern in SECRET_PATTERNS):
                         combined_lines.add(line_clean)
+                    else:
+                        filtered_lines.append(line_clean)
 
     total_count = len(combined_lines)
     now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -90,6 +95,12 @@ def main():
         print(f"List generated successfully: {output_filename}")
     except IOError as e:
         print(f"Error writing to {output_filename}: {e}")
+
+    # Log filtered lines
+    if filtered_lines:
+        print("Filtered lines (potential secrets):")
+        for line in filtered_lines:
+            print(line)
 
 if __name__ == "__main__":
     main()
