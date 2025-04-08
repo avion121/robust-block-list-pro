@@ -25,7 +25,12 @@ URLS = [
     "https://phishing.army/download/phishing_army_blocklist.txt",
     "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_3_Spyware/filter.txt",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt"
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt",
+    # Added resource‑abuse to catch hidden CPU/bandwidth‑abuse scripts
+    "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/resource-abuse.txt",
+    # Added Anti‑Adblock lists:
+    "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
+    "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt"
 ]
 
 # Base header metadata for the block list
