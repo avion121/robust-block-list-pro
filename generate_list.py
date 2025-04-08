@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import requests
 from datetime import datetime
+import re
 
 # List of source URLs for block lists
 URLS = [
@@ -26,9 +27,7 @@ URLS = [
     "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_3_Spyware/filter.txt",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt",
-    # Added resource‑abuse to catch hidden CPU/bandwidth‑abuse scripts
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/resource-abuse.txt",
-    # Added Anti‑Adblock lists:
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
     "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt"
 ]
@@ -37,6 +36,12 @@ URLS = [
 BASE_HEADER_LINES = [
     "! Title: Robust Block List Pro",
     "! Description: Combined block list from multiple sources"
+]
+
+# Regular expression patterns to match potential secrets
+SECRET_PATTERNS = [
+    re.compile(r'IBM SoftLayer API Key'),
+    re.compile(r'IBM Cloud IAM Key')
 ]
 
 def fetch_url(url):
@@ -60,7 +65,9 @@ def main():
                 line_clean = line.strip()
                 # Skip empty lines and lines already included in the header
                 if line_clean and line_clean not in BASE_HEADER_LINES:
-                    combined_lines.add(line_clean)
+                    # Filter out lines containing potential secrets
+                    if not any(pattern.search(line_clean) for pattern in SECRET_PATTERNS):
+                        combined_lines.add(line_clean)
 
     total_count = len(combined_lines)
     now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
