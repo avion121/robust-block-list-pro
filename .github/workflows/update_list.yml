@@ -1,48 +1,35 @@
-name: Update Robust Block List Pro
+name: Update Block List
 
 on:
   schedule:
-    - cron: '0 5 * * *'  # Runs daily at 5 AM UTC
+    - cron: '0 5 * * *'  # 5 AM UTC
   workflow_dispatch:
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: false  # Disable caching to avoid using GITHUB_TOKEN on push
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.10'
 
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
+      - name: Install dependencies
+        run: pip install requests
 
-      - name: Run the Python Script
+      - name: Generate lists
         run: python generate_list.py
 
-      - name: Commit and Push Changes
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      - name: Commit changes
         run: |
-          # Configure Git user
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Add changes
+          git config --global user.name "Auto Updater"
+          git config --global user.email "updater@robustblock.com"
           git add robust_block_list_pro.txt dns_blocker.mobileconfig
-          if ! git diff-index --quiet HEAD; then
-            git commit -m "Update Robust Block List Pro and iOS profile"
-            # Push using the PAT for authentication
-            git push https://x-access-token:${PAT_TOKEN}@github.com/avion121/robust-block-list-pro.git HEAD:main
-          else
-            echo "No changes to commit"
-          fi
+          git commit -m "Auto-update: $(date +'%Y-%m-%d %H:%M')" || echo "No changes"
+          git push
