@@ -38,9 +38,9 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           # Add changes
-          git add robust_block_list_pro.txt
+          git add robust_block_list_pro.txt dns_blocker.mobileconfig
           if ! git diff-index --quiet HEAD; then
-            git commit -m "Update Robust Block List Pro"
+            git commit -m "Update Robust Block List Pro and iOS profile"
             # Push using the PAT for authentication
             git push https://x-access-token:${PAT_TOKEN}@github.com/avion121/robust-block-list-pro.git HEAD:main
           else
