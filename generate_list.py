@@ -2,6 +2,10 @@
 import requests
 from datetime import datetime
 import re
+import uuid
+import plistlib
+from xml.etree import ElementTree
+from xml.dom import minidom
 
 # List of source URLs for block lists
 URLS = [
@@ -55,6 +59,88 @@ def fetch_url(url):
         print(f"Error fetching {url}: {e}")
         return ""
 
+def extract_domains(line):
+    """Extract domain names from different filter formats"""
+    domain = None
+    
+    # Check for common filter patterns
+    if line.startswith('||'):
+        # Matches ||domain.com^
+        domain = re.match(r'^\|\|([\w.-]+)\^?', line)
+        if domain:
+            return domain.group(1)
+    elif line.startswith('0.0.0.0 ') or line.startswith('127.0.0.1 '):
+        # Matches 0.0.0.0 domain.com
+        parts = line.split()
+        if len(parts) >= 2:
+            return parts[1]
+    elif re.match(r'^[\w.-]+$', line):
+        # Plain domain name
+        return line
+    elif '/' in line:
+        # Skip URL paths
+        return None
+    
+    return None
+
+def generate_mobileconfig(domains):
+    """Generate iOS configuration profile with DNS settings"""
+    # Generate unique identifiers
+    payload_uuid = str(uuid.uuid4())
+    profile_uuid = str(uuid.uuid4())
+    
+    # Create XML structure
+    plist_dict = {
+        'PayloadContent': [
+            {
+                'DNSSettings': {
+                    'DNSProtocol': 'HTTPS',
+                    'ServerAddresses': ['8.8.8.8'],  # Google DNS
+                    'ServerURL': 'https://dns.google/dns-query'
+                },
+                'PayloadDescription': 'Configures device to use secure DNS',
+                'PayloadDisplayName': 'Robust DNS Protection',
+                'PayloadIdentifier': 'com.robustblocklistpro.dns',
+                'PayloadType': 'com.apple.dnsSettings.managed',
+                'PayloadUUID': payload_uuid,
+                'PayloadVersion': 1
+            }
+        ],
+        'PayloadDescription': 'Robust Block List Pro - DNS Protection',
+        'PayloadDisplayName': 'Robust DNS Blocker',
+        'PayloadIdentifier': 'com.robustblocklistpro',
+        'PayloadRemovalDisallowed': False,
+        'PayloadScope': 'System',
+        'PayloadType': 'Configuration',
+        'PayloadUUID': profile_uuid,
+        'PayloadVersion': 1
+    }
+
+    # Add OnDemandRules if we have domains
+    if domains:
+        plist_dict['PayloadContent'][0]['OnDemandRules'] = [{
+            'Action': 'Disconnect',
+            'DNSDomainMatch': domains,
+            'DNSDomainMatchType': 'MatchesAny',
+            'InterfaceTypeMatch': 'Any'
+        }]
+
+    # Generate plist XML
+    plist_xml = plistlib.dumps(plist_dict)
+    
+    # Wrap in configuration profile header
+    xml_header = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
+    )
+    
+    # Pretty-print the XML
+    parsed = minidom.parseString(plist_xml)
+    pretty_plist = parsed.toprettyxml(indent='  ', encoding='UTF-8').decode()
+    
+    # Combine header and pretty-printed plist
+    return xml_header + pretty_plist
+
 def main():
     combined_lines = set()
     filtered_lines = []
@@ -96,9 +182,35 @@ def main():
     except IOError as e:
         print(f"Error writing to {output_filename}: {e}")
 
+    # Generate iOS configuration profile
+    print("\nGenerating iOS configuration profile...")
+    
+    # Extract domains from combined lines
+    domains = set()
+    for line in sorted_lines:
+        if line.startswith('!'):  # Skip comments
+            continue
+        domain = extract_domains(line)
+        if domain:
+            domains.add(domain)
+
+    # Generate mobileconfig content
+    domain_list = list(domains)[:50000]  # iOS limit ~50k domains
+    mobileconfig_content = generate_mobileconfig(domain_list)
+    
+    # Write mobileconfig file
+    config_filename = "dns_blocker.mobileconfig"
+    try:
+        with open(config_filename, "w", encoding="utf-8") as f:
+            f.write(mobileconfig_content)
+        print(f"iOS configuration profile generated: {config_filename}")
+        print(f"Domains included: {len(domain_list)}")
+    except IOError as e:
+        print(f"Error writing {config_filename}: {e}")
+
     # Log filtered lines
     if filtered_lines:
-        print("Filtered lines (potential secrets):")
+        print("\nFiltered lines (potential secrets):")
         for line in filtered_lines:
             print(line)
 
