@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 import re
 import uuid
 import plistlib
@@ -174,7 +174,7 @@ def main():
                         filtered_lines.append(line_clean)
 
     total_count = len(combined_lines)
-    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
     # Construct header with metadata
     header_lines = BASE_HEADER_LINES + [
