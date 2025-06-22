@@ -40,9 +40,7 @@ URLS = [
     "https://hosts-file.net/ad_servers.txt",
     "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt",
     "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
-    # Newly added feeds:
-    "https://raw.githubusercontent.com/disconnectme/disconnect-tracking-protection/master/services.json",
-    "https://filters.adtidy.org/windows/filters/sociads/filters.txt",
+
 ]
 
 BASE_HEADER_LINES = [
