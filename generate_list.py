@@ -3,8 +3,10 @@ import requests
 from datetime import datetime
 import re
 import json
+import plistlib
+import base64
 
-# List of source URLs for block lists (your existing feeds plus two new ones)
+# List of source URLs for block lists
 URLS = [
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/filters.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/badware.txt",
@@ -40,7 +42,6 @@ URLS = [
     "https://hosts-file.net/ad_servers.txt",
     "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt",
     "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
-
 ]
 
 BASE_HEADER_LINES = [
@@ -81,10 +82,36 @@ def extract_disconnect_domains(content):
         pass
     return domains
 
+def generate_dns_profile(dns_servers):
+    plist = {
+        'PayloadUUID': 'your-unique-uuid-here',
+        'PayloadType': 'Configuration',
+        'PayloadOrganization': 'Your Organization',
+        'PayloadIdentifier': 'com.yourorganization.dnsprofile',
+        'PayloadDisplayName': 'DNS Profile',
+        'PayloadDescription': 'Configures DNS settings to use custom DNS servers',
+        'PayloadVersion': 1,
+        'PayloadContent': [{
+            'PayloadUUID': 'your-unique-uuid-here',
+            'PayloadType': 'com.apple.dnsSettings.managed',
+            'PayloadOrganization': 'Your Organization',
+            'PayloadIdentifier': 'com.yourorganization.dnsSettings.managed',
+            'PayloadDisplayName': 'DNS Settings',
+            'PayloadDescription': 'Configures DNS settings to use custom DNS servers',
+            'PayloadVersion': 1,
+            'DNSSettings': {
+                'DNSProtocol': 'IPv4',
+                'ServerAddresses': dns_servers
+            }
+        }]
+    }
+
+    with open('dns_profile.mobileconfig', 'wb') as f:
+        plistlib.dump(plist, f)
+
 def main():
     combined = set()
     filtered = []
-
     for url in URLS:
         content = fetch_url(url)
         if not content:
@@ -114,6 +141,10 @@ def main():
     output = "\n".join(header) + "\n\n" + "\n".join(sorted(combined)) + "\n"
     with open("robust_block_list_pro.txt", "w", encoding="utf-8") as f:
         f.write(output)
+
+    # Generate DNS profile
+    dns_servers = ['1.1.1.1', '1.0.0.1']  # Example DNS servers, replace with your own
+    generate_dns_profile(dns_servers)
 
     if filtered:
         print("Filtered potential secrets:")
