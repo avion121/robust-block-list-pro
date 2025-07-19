@@ -3,7 +3,6 @@ import requests
 from datetime import datetime
 import re
 
-# List of source URLs for block lists
 URLS = [
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/filters.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/badware.txt",
@@ -13,7 +12,6 @@ URLS = [
     "https://easylist.to/easylist/easylist.txt",
     "https://easylist.to/easylist/easyprivacy.txt",
     "https://feodotracker.abuse.ch/downloads/ipblocklist.txt",
-    "https://ransomwaretracker.abuse.ch/blocklist/",
     "https://urlhaus.abuse.ch/downloads/hostfile/",
     "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt",
@@ -29,24 +27,35 @@ URLS = [
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/resource-abuse.txt",
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
-    "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt"
+    "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt",
+    "https://zerodot1.gitlab.io/CoinBlockerLists/list.txt",
+    "https://raw.githubusercontent.com/CoinBlocker/CoinBlockerLists/master/hosts",
+    "https://github.com/hoshsadiq/adblock-nocoin-list/raw/master/nocoin.txt",
+    "https://raw.githubusercontent.com/bogachenko/fuck-anti-adblock/master/fuck-anti-adblock.txt",
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_14_AntiAnnoyances/filter.txt",
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_15_Mobile/filter.txt",
+    "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt",
+    "https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/hosts.txt",
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt",
+    "https://raw.githubusercontent.com/EFForg/privacybadger/master/data/trackers.txt",
+    "https://raw.githubusercontent.com/easylist/easylistjapan/master/easylistjapan.txt",
+    "https://raw.githubusercontent.com/ABPindo/indonesianadblockfilters/master/subscriptions/indonesian-list.txt",
+    "https://raw.githubusercontent.com/AdnanHussain/ArabList/master/ArabList.txt",
+    "https://easylist.to/easylist/easylistgermany.txt"
 ]
 
-# Base header metadata for the block list
 BASE_HEADER_LINES = [
     "! Title: Robust Block List Pro",
     "! Description: Combined block list from multiple sources"
 ]
 
-# Regular expression patterns to match potential secrets
 SECRET_PATTERNS = [
-    re.compile(r'[a-zA-Z0-9]{40,60}'),  # Matches IBM SoftLayer API Key and IBM Cloud IAM Key
-    re.compile(r'apikey', re.IGNORECASE),  # Matches the word 'apikey'
-    re.compile(r'IBM', re.IGNORECASE),  # Matches the word 'IBM'
+    re.compile(r'[a-zA-Z0-9]{40,60}'),
+    re.compile(r'apikey', re.IGNORECASE),
+    re.compile(r'IBM', re.IGNORECASE),
 ]
 
 def fetch_url(url):
-    """Fetch the content from a URL and return the text, or an empty string if failed."""
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
@@ -65,9 +74,7 @@ def main():
         if content:
             for line in content.splitlines():
                 line_clean = line.strip()
-                # Skip empty lines and lines already included in the header
                 if line_clean and line_clean not in BASE_HEADER_LINES:
-                    # Filter out lines containing potential secrets
                     if not any(pattern.search(line_clean) for pattern in SECRET_PATTERNS):
                         combined_lines.add(line_clean)
                     else:
@@ -76,27 +83,21 @@ def main():
     total_count = len(combined_lines)
     now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    # Construct header with metadata
     header_lines = BASE_HEADER_LINES + [
         f"! Total Blocked Items: {total_count}",
         f"! Updated: {now}"
     ]
     header = "\n".join(header_lines)
-
-    # Prepare final sorted list content
     sorted_lines = sorted(combined_lines)
     final_content = header + "\n\n" + "\n".join(sorted_lines) + "\n"
 
-    # Write the formatted list to file
-    output_filename = "robust_block_list_pro.txt"
     try:
-        with open(output_filename, "w", encoding="utf-8") as f:
+        with open("robust_block_list_pro.txt", "w", encoding="utf-8") as f:
             f.write(final_content)
-        print(f"List generated successfully: {output_filename}")
+        print("List generated successfully.")
     except IOError as e:
-        print(f"Error writing to {output_filename}: {e}")
+        print(f"Error writing to file: {e}")
 
-    # Log filtered lines
     if filtered_lines:
         print("Filtered lines (potential secrets):")
         for line in filtered_lines:
