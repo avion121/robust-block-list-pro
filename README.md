@@ -1,51 +1,35 @@
 # 🚫 Robust Block List Pro
 
-**Robust Block List Pro** is a daily auto-updated, consolidated block list that aggregates entries from the most trusted adblock, malware, privacy, and phishing filter sources. This list is intended to enhance online security, block malicious domains, and improve privacy across browsers and devices.
+**Robust Block List Pro** is a high-performance, daily-updated blocklist that combines entries from the most reliable ad, tracker, malware, phishing, and annoyance filter sources. It is designed to work seamlessly with adblockers like **uBlock Origin**, **AdGuard**, and **Pi-hole**, to enhance security, privacy, and browsing performance across all platforms.
 
 ---
 
 ## 📋 What It Does
 
-- ✅ Aggregates entries from 20+ curated block list sources
-- 🔄 Automatically updates every day at **5:00 AM UTC** using GitHub Actions
-- 🧹 Filters out any lines that may accidentally contain secrets (e.g., API keys)
-- 📄 Outputs a clean `robust_block_list_pro.txt` file in the root of the repository
+- ✅ Aggregates entries from **38+ highly curated filter lists**
+- 🔁 **Auto-updates daily at 5:00 AM UTC** via GitHub Actions
+- 🧹 Automatically removes duplicates and potential API keys or secrets
+- 🧪 Filters out malformed or suspicious entries
+- 🧾 Outputs a clean and sorted `robust_block_list_pro.txt` file
 
 ---
 
 ## 🛠️ How It Works
 
-1. Python script `generate_list.py` fetches and merges entries from all sources.
-2. Removes duplicates and filters lines with patterns that resemble sensitive data.
-3. Generates a final sorted list with a detailed header.
-4. Commits the updated file to the repository automatically via GitHub Actions.
+1. The Python script [`generate_list.py`](./generate_list.py):
+   - Fetches all configured blocklists
+   - Merges and deduplicates rules
+   - Filters lines resembling secrets (API keys, tokens, etc.)
+   - Generates a sorted, unified list with metadata
+
+2. GitHub Actions:
+   - Runs daily (`cron: 0 5 * * *`)
+   - Commits only if content has changed
+   - Uses a Personal Access Token (`PAT_TOKEN`) for pushing changes
 
 ---
 
-## 🧪 Tech Stack
-
-- **Python 3.x**
-- **GitHub Actions** for automation
-- **Requests** library for HTTP requests
-
----
-
-## 🔐 Secrets Used in GitHub Actions
-
-| Name       | Description                         |
-|------------|-------------------------------------|
-| `PAT_TOKEN`| Personal Access Token with `repo` scope to push changes |
-
-Add this secret via:
-Settings > Secrets and Variables > Actions > New repository secret
-
-yaml
-Copy
-Edit
-
----
-
-## 📂 Output Example
+## 📂 Output Preview
 
 
 ! Title: Robust Block List Pro
@@ -56,28 +40,46 @@ Edit
 0.0.0.0 example-malicious-domain.com
 ||tracking.adnetwork.com^
 ||clickbait.example.net^
-...
+⚙️ Tech Stack
+Python 3.x
+
+GitHub Actions
+
+requests Python package
+
+🔐 GitHub Actions Secrets
+Secret Name	Description
+PAT_TOKEN	GitHub Personal Access Token with repo scope for pushing commits
+
+Add this in your repository:
+Settings > Secrets and Variables > Actions > New repository secret
+
 📅 Automation Schedule
-Runs every day at 5:00 AM UTC
+⏱ Runs automatically every day at 5:00 AM UTC
 
-Can also be manually triggered via GitHub Actions > Run workflow
+▶️ Can also be manually triggered via GitHub Actions → Run workflow
 
-📌 To Do (Future Ideas)
- Add option to exclude specific domains
+🚀 To Do / Future Features
+ Add domain exclusion support (block exceptions)
 
- Output in multiple formats (Adblock Plus, uBlock Origin, Hosts)
+ Output support for multiple formats (e.g., AdGuard, hosts, raw DNS)
 
- Add user dashboard or GitHub Pages UI
+ Optional minimal version (for performance)
+
+ GitHub Pages dashboard (visual UI, stats, download buttons)
 
 📄 License
 This project is open-source under the MIT License.
 
-Created with ❤️ to promote a safer, faster, and more private internet experience.
+Created with ❤️ to make the web safer, faster, and more private.
 
-yaml
-Copy
-Edit
 
----
 
-Let me know if you'd like help creating a `LICENSE` file or setting up GitHub Pages to show a visual summary of the block list!
+
+
+
+
+
+
+
+
