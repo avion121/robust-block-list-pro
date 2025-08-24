@@ -9,11 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write   # ✅ allow pushes with GITHUB_TOKEN
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -27,8 +28,6 @@ jobs:
         run: python generate_list.py
 
       - name: Commit and Push Changes
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -36,7 +35,7 @@ jobs:
           if ! git diff --cached --quiet; then
             git commit -m "Update Robust Block List Pro (combined)"
             git pull --rebase origin main
-            git push https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }} HEAD:main
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
           else
             echo "ℹ️ No changes to commit"
           fi
