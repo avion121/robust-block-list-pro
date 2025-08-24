@@ -1,3 +1,4 @@
+```yaml
 name: Update Robust Block List Pro
 
 on:
@@ -80,3 +81,4 @@ jobs:
         with:
           name: validate-logs
           path: validate.log
+```
