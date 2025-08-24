@@ -1,4 +1,4 @@
-```python
+
 #!/usr/bin/env python3
 import requests
 from datetime import datetime
@@ -186,4 +186,4 @@ if __name__ == "__main__":
     unittest.main(argv=[''], exit=False)
     # Run main
     main()
-```
+
