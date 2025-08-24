@@ -1,8 +1,0 @@
-! Title: Robust Block List Pro
-! Description: Combined block list from multiple sources for ultimate ad, tracker, and malware protection
-! Homepage: https://github.com/<your-repo>
-! Category: Ai_content
-! Total Blocked Items: 0
-! Updated: 2025-08-24 15:08:28 UTC
-
-
