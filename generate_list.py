@@ -61,6 +61,7 @@ OUTPUT_FILE = "robust_block_list_pro.txt"
 LOG_FILE = "fetch_errors.log"
 STALE_THRESHOLD = 30 * 24 * 60 * 60  # 30 days in seconds
 
+
 def is_valid_url(url):
     """Validate URL format."""
     try:
@@ -68,6 +69,7 @@ def is_valid_url(url):
         return all([result.scheme, result.netloc])
     except Exception:
         return False
+
 
 def is_valid_entry(line, is_hosts=False):
     """Validate blocklist or whitelist entry."""
@@ -79,6 +81,7 @@ def is_valid_entry(line, is_hosts=False):
     # Basic Adblock Plus syntax check (supports ||, @@, cosmetic filters, etc.)
     return bool(re.match(r'^(\|\||@@)?[a-zA-Z0-9-_\./\*\$\^:]+', line))
 
+
 def parse_last_modified(header):
     """Parse Last-Modified header to timestamp."""
     try:
@@ -86,13 +89,14 @@ def parse_last_modified(header):
     except:
         return None
 
+
 def fetch_list(url, retries=3, backoff=2):
     """Fetch a list with retries, validate freshness, and log failures."""
     if not is_valid_url(url):
         with open(LOG_FILE, "a", encoding="utf-8") as log:
             log.write(f"[INVALID URL] {url}\n")
         return [], "Invalid URL"
-    
+
     for attempt in range(retries):
         try:
             response = requests.get(url, headers={"Accept-Encoding": "identity"}, timeout=25)
@@ -111,6 +115,7 @@ def fetch_list(url, retries=3, backoff=2):
                 log.write(f"[ERROR] {url} → {e} (Attempt {attempt+1})\n")
         time.sleep(backoff ** attempt)
     return [], "Failed"
+
 
 def generate_combined_blocklist():
     """Generate deduplicated blocklist with metadata."""
@@ -147,10 +152,12 @@ def generate_combined_blocklist():
         f.write(f"! Title: Robust Block List Pro\n")
         f.write(f"! Version: {version}\n")
         f.write(f"! Last modified: {current_time}\n")
-        f.write(f"! Sources:\n{'\n'.join(source_metadata)}\n\n")
+        sources_text = "\n".join(source_metadata)
+        f.write(f"! Sources:\n{sources_text}\n\n")
         f.write("\n".join(sorted(final_entries)))
 
     return len(final_entries)
+
 
 if __name__ == "__main__":
     open(LOG_FILE, "w").close()  # Clear log file
