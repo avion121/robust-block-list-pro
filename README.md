@@ -1,351 +1,58 @@
 Robust Block List Pro
-
-The Ultimate, Most Powerful Ad, Tracker, Malware, and Scam Blocking List
-
-Robust Block List Pro is a dynamically generated, comprehensive block list designed to deliver unmatched protection against ads, trackers, malware, phishing, cryptojacking, scams, pop-ups, and other online threats. Aggregating over 70 high-quality sources, including uBlock Origin, EasyList, AdGuard, hagezi, blocklistproject, and advanced threat intelligence feeds, this list is crafted to be the ULTIMATE TRUE GOAT (Greatest of All Time) for privacy and security enthusiasts. Updated daily via GitHub Actions, it ensures fresh, effective blocking for tools like uBlock Origin, Pi-hole, AdGuard Home, and more.
-
+Overview
+Robust Block List Pro is a comprehensive, automated block list that aggregates and curates entries from multiple trusted sources to block ads, trackers, malware, and other unwanted content. This project uses a GitHub Actions workflow to fetch, process, and combine block lists daily, producing a single, unified block list (robust_block_list_pro.txt) for use in ad blockers, DNS filters, or other content filtering tools.
 Features
 
-
-
-
-
-Massive Coverage: Combines core, regional, and specialized block lists for ads, trackers, malware, phishing, scams, cryptojacking, pop-ups, and native OS telemetry.
-
-
-
-Daily Updates: Automated via GitHub Actions at 5:00 AM UTC to block the latest threats.
-
-
-
-Deduplication & Safety: Removes duplicates and filters potential secrets (e.g., API keys) for a clean, efficient list.
-
-
-
-Broad Compatibility: Works with browser extensions (uBlock Origin, AdBlock Plus), DNS blockers (Pi-hole, AdGuard Home), and hosts-based filtering.
-
-
-
-Open Source: Freely available, with contributions welcome to enhance its power.
-
-Block List Sources
-
-Robust Block List Pro aggregates from the following trusted sources, organized by category:
-
-Core Filters
-
-
-
-
-
-uBlock Origin: Core filters, badware, privacy, quick fixes, unbreak
-
-
-
-EasyList & EasyPrivacy: Global ad and tracking lists
-
-
-
-AdGuard: Mobile, anti-annoyance, spyware filters
-
-
-
-Fanboy: Annoyance and anti-adblock filters
-
-Malware & Phishing
-
-
-
-
-
-abuse.ch: Feodo Tracker IP blocklist, URLhaus hostfile
-
-
-
-phishing.army: Standard and extended phishing blocklists
-
-
-
-blocklistproject: Malware, phishing, scam, crypto, tracking lists
-
-
-
-Malware Filter: Dedicated phishing and malware domains
-
-Ads & Tracking
-
-
-
-
-
-StevenBlack Hosts: Fakenews and gambling variants
-
-
-
-hagezi: Pro, Ultimate, Pop-up Ads, Native Trackers, Threat Intelligence Feeds (TIF)
-
-
-
-Disconnect: Simple tracking and ad lists
-
-
-
-Privacy Badger: EFF's tracker list
-
-
-
-pgl.yoyo.org: Ad server hosts
-
-Anti-Adblock & Cryptojacking
-
-
-
-
-
-Anti-Adblock Killer: Reek's anti-adblock filters
-
-
-
-CoinBlocker & NoCoin: Cryptojacking protection
-
-
-
-bogachenko: Anti-adblock countermeasures
-
-Regional & Specialized
-
-
-
-
-
-EasyList Regional: Japan, Germany, France, Spain, Russia, China, Italy, Dutch, Indonesia, Arabic
-
-
-
-AdGuard Chinese: China-specific ad servers
-
-
-
-SmartTV & IoT: Perflyst's SmartTV blocklist, durable napkin scam hosts
-
-
-
-FireHOL: Levels 1-3 IP blocklists
-
-
-
-Family-Safe: someonewhocares.org hosts
-
-GOAT Enhancements
-
-
-
-
-
-Threat Intelligence: hagezi TIF (malware, C2, phishing)
-
-
-
-Scams & Crypto: blocklistproject scam and crypto lists
-
-
-
-Pop-ups: hagezi pop-up ads
-
-
-
-Native Trackers: hagezi multi-platform telemetry (Apple, Google, Microsoft)
-
-
-
-Extended Ads/Tracking: AdGuard DNS, Disconnect Simple Ads, developerdan
-
-
-
-Risky Content: FadeMind's add.Risk hosts
-
-For the complete list of sources, see generate_list.py.
-
-Installation
-
-
-
-
-
-Clone or Download the Repository:
-
-git clone https://github.com/<your-username>/<your-repo>.git
-
-
-
-Install Python 3: Ensure Python 3.x is installed on your system.
-
-
-
-Install Dependencies:
-
-pip install requests
-
-
-
-Run the Script:
-
-python generate_list.py
-
-This generates robust_block_list_pro.txt in the repository root.
+Daily Updates: Automatically updates every day at 5:00 AM UTC using GitHub Actions.
+Curated Sources: Combines high-quality block lists from sources like uBlock Origin, EasyList, AdGuard, and more.
+Deduplication: Removes duplicate entries to ensure a clean and efficient list.
+Whitelist Support: Excludes whitelisted domains to prevent false positives.
+Secret Filtering: Filters out potential API keys or sensitive tokens for safety.
+Single Output: Generates one unified block list (robust_block_list_pro.txt) for easy integration.
 
 Usage
 
-uBlock Origin / AdBlock Plus
+Download the Block List: Get the latest robust_block_list_pro.txt from the Releases or directly from the repository.
+Integrate with Tools: Import the list into your preferred ad blocker (e.g., uBlock Origin, AdGuard) or DNS filter (e.g., Pi-hole).
+Stay Updated: The list is updated daily, so configure your tool to check for updates regularly.
+
+Setup for Development
+To run or modify the block list generation locally:
+
+Clone the Repository:git clone https://github.com/<your-repo>.git
+cd robust-block-list-pro
 
 
+Install Dependencies:Ensure you have Python 3.11 installed, then run:pip install requests tenacity
 
 
+Run the Script:Execute the generation script:python generate_list.py
 
-Open your ad blocker's settings.
+This will fetch the block lists, process them, and generate robust_block_list_pro.txt.
 
+GitHub Actions Workflow
+The project uses a GitHub Actions workflow (robust_block_list_pro.yml) to:
 
+Run daily at 5:00 AM UTC.
+Fetch and process block lists using generate_list.py.
+Commit and push the updated robust_block_list_pro.txt to the repository.
 
-Add the list URL:
+To customize the workflow:
 
-https://raw.githubusercontent.com/<your-username>/<your-repo>/main/robust_block_list_pro.txt
-
-
-
-Update filters to apply.
-
-Pi-hole / AdGuard Home
-
-
-
-
-
-Add the list URL to your blocklist sources in the admin interface.
-
-
-
-Update gravity or refresh to apply.
-
-
-
-Note: Convert hosts-format entries (e.g., 127.0.0.1 domain) to domains if needed for DNS-based blockers.
-
-Hosts File
-
-Append the contents of robust_block_list_pro.txt to your system's hosts file:
-
-
-
-
-
-Linux: /etc/hosts
-
-
-
-Windows: C:\Windows\System32\drivers\etc\hostsEnsure proper formatting for hosts-based blocking.
-
-Automation
-
-The block list is updated daily at 5:00 AM UTC via the GitHub Actions workflow defined in update-robust-block-list-pro.yml. To enable automation in your repository:
-
-
-
-
-
-Create a Personal Access Token (PAT) with repo scope.
-
-
-
-Store it in your repository's secrets as PAT_TOKEN.
-
-
-
-The workflow will:
-
-
-
-
-
-Check out the repository.
-
-
-
-Run generate_list.py.
-
-
-
-Commit and push updates to robust_block_list_pro.txt if changes are detected.
+Update the PAT_TOKEN secret in your GitHub repository settings for authenticated pushes.
+Modify BLOCKLIST_URLS in generate_list.py to add or remove sources.
 
 Contributing
+Contributions are welcome! To contribute:
 
-We welcome contributions to make Robust Block List Pro the ULTIMATE GOAT block list! To contribute:
+Fork the repository.
+Create a new branch (git checkout -b feature/your-feature).
+Make your changes (e.g., add new block list sources, improve filtering logic).
+Test locally using python generate_list.py.
+Push your changes and create a pull request.
 
-
-
-
-
-Add New Sources:
-
-
-
-
-
-Suggest high-quality, low-false-positive block lists via issues or pull requests.
-
-
-
-Include the URL, category, and rationale for inclusion.
-
-
-
-Improve the Script:
-
-
-
-
-
-Enhance generate_list.py (e.g., add hosts-to-ABP conversion, logging, or retry logic).
-
-
-
-Report Issues:
-
-
-
-
-
-Open an issue for false positives, broken sources, or script errors.
-
-
-
-Fork the repository, make changes, and submit a pull request with a clear description.
-
-Notes
-
-
-
-
-
-Performance: With over 70 sources, the list is extensive. Test for false positives (e.g., legitimate sites breaking) and optimize for your tool's limits (e.g., Pi-hole's gravity size).
-
-
-
-Format Compatibility: The script combines ABP-style (||domain^) and hosts-style (127.0.0.1 domain) entries. For DNS blockers, you may need to parse hosts entries into domain lists.
-
-
-
-Testing: Test updates in a controlled environment before deploying to production systems.
-
-
-
-License: This project is licensed under the MIT License.
-
-Acknowledgments
-
-Special thanks to the maintainers of uBlock Origin, EasyList, AdGuard, hagezi, blocklistproject, and all source lists for their invaluable contributions to a safer internet.
-
-For questions or support, open an issue or contact the maintainer at [your-email@example.com].
-
-
-
-Generated and maintained by Robust Block List Pro - The Ultimate GOAT Block List
+Please ensure new block list sources are reliable and do not introduce duplicates or invalid entries.
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+Contact
+For issues or suggestions, open an issue on the GitHub repository or contact the maintainer at your-email@example.com.
