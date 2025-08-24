@@ -11,20 +11,20 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: false  # Prevent use of GITHUB_TOKEN when pushing
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests
+          pip install requests tenacity
 
       - name: Run List Generation
         run: python generate_list.py
@@ -37,8 +37,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage updated file
-          git add robust_block_list_pro.txt
+          # Stage updated files
+          git add *.txt
 
           # Commit if changes exist
           if ! git diff --cached --quiet; then
