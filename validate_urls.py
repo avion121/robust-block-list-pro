@@ -1,4 +1,4 @@
-```python
+
 #!/usr/bin/env python3
 import requests
 from generate_list import BLOCKLIST_URLS, WHITELIST_URLS
@@ -31,4 +31,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
+
