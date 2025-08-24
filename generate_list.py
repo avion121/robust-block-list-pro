@@ -67,7 +67,7 @@ WHITELIST_URLS = [
 BASE_HEADER_LINES = [
     "! Title: Robust Block List Pro",
     "! Description: Combined block list from multiple sources for ultimate ad, tracker, and malware protection",
-    "! Homepage: https://github.com/<your-repo>",  # Replace with your repo
+    "! Homepage: https://github.com/avion121/robust-block-list-pro",  # Updated with your repo
 ]
 
 SECRET_PATTERNS = [
