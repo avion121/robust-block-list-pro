@@ -10,22 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write   # ✅ allow pushes with GITHUB_TOKEN
+      contents: write   # Allow pushes with GITHUB_TOKEN
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated to latest version for reliability
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5  # Updated to latest version
         with:
-          python-version: "3.x"
+          python-version: "3.11"  # Specify a stable Python version for consistency
 
-      - name: Install requests
+      - name: Install dependencies
         run: pip install requests
 
       - name: Generate Block List
         run: python generate_list.py
+
+      - name: Check for persistent fetch errors
+        run: |
+          if [ -s fetch_errors.log ]; then
+            echo "⚠️ Fetch errors detected, check fetch_errors.log"
+            cat fetch_errors.log
+          fi
 
       - name: Commit and Push Changes
         run: |
@@ -33,9 +40,25 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add robust_block_list_pro.txt fetch_errors.log
           if ! git diff --cached --quiet; then
-            git commit -m "Update Robust Block List Pro (combined)"
+            git commit -m "Update Robust Block List Pro (combined) - $(date -u +%Y-%m-%d)"
             git pull --rebase origin main
             git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
           else
             echo "ℹ️ No changes to commit"
           fi
+
+      - name: Notify on persistent errors
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const errors = fs.readFileSync('fetch_errors.log', 'utf8');
+            if (errors) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: 'Robust Block List Pro: Fetch Errors Detected',
+                body: `Persistent fetch errors occurred during the update process. Please review the logs:\n\n\`\`\`\n${errors}\n\`\`\``
+              });
+            }
