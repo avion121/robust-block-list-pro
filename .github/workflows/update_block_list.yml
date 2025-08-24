@@ -3,13 +3,14 @@ name: Update Robust Block List Pro
 
 on:
   schedule:
-    - cron: '0 5 * * *'  # Runs daily at 5:00 AM UTC
+    - cron: '0 5 * * *'  # Runs daily at 5:00 AM UTC for build job
+    - cron: '0 0 * * 0'  # Runs weekly on Sunday for validate-sources job
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    if: github.event.schedule == '0 5 * * *' || github.event_name == 'workflow_dispatch'  # Only run on daily schedule or manual dispatch
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -56,8 +57,7 @@ jobs:
 
   validate-sources:
     runs-on: ubuntu-latest
-    schedule:
-      - cron: '0 0 * * 0'  # Weekly on Sunday
+    if: github.event.schedule == '0 0 * * 0'  # Only run on weekly schedule
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
