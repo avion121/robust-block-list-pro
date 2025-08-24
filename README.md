@@ -1,37 +1,60 @@
 # 🚫 Robust Block List Pro
 
-**Robust Block List Pro** is a high-performance, daily-updated blocklist that combines entries from the most reliable ad, tracker, malware, phishing, and annoyance filter sources. It is designed to work seamlessly with adblockers like **uBlock Origin**, **AdGuard**, and **Pi-hole**, to enhance security, privacy, and browsing performance across all platforms.
+**Robust Block List Pro** is your go-to, enterprise‑grade blocklist aggregator. Every day at 05:00 UTC, our GitHub Actions workflow pulls from 40+ best‑in‑class ad, tracker, malware, phishing, and annoyance feeds—deduplicates entries, strips out any potential secrets, and publishes a lean, battle‑tested `robust_block_list_pro.txt` for seamless use with uBlock Origin, AdGuard, Pi‑hole, and other DNS‑level blockers.
 
 ---
 
-## 📋 What It Does
+## 📦 Features
 
-- ✅ Aggregates entries from **38+ highly curated filter lists**
-- 🔁 **Auto-updates daily at 5:00 AM UTC** via GitHub Actions
-- 🧹 Automatically removes duplicates and potential API keys or secrets
-- 🧪 Filters out malformed or suspicious entries
-- 🧾 Outputs a clean and sorted `robust_block_list_pro.txt` file
+* **Daily Auto‑Update**: Cron‑driven GitHub Actions at 05:00 UTC, plus manual dispatch.
+* **Multi‑Source Aggregation**: 40+ curated upstream lists covering:
 
----
-
-## 🛠️ How It Works
-
-1. The Python script [`generate_list.py`](./generate_list.py):
-   - Fetches all configured blocklists
-   - Merges and deduplicates rules
-   - Filters lines resembling secrets (API keys, tokens, etc.)
-   - Generates a sorted, unified list with metadata
-
-2. GitHub Actions:
-   - Runs daily (`cron: 0 5 * * *`)
-   - Commits only if content has changed
-   - Uses a Personal Access Token (`PAT_TOKEN`) for pushing changes
+  * Ads & Trackers
+  * Malware & Phishing
+  * Coin‑Miners & Cryptojacking
+  * Anti‑Adblock & Cookie Pop‑ups
+  * IoT / SmartTV / Pi‑Hole extensions
+  * Regional & Language‑Specific Variants
+  * FireHOL IP Blocklists (Level 1–3)
+  * Family‑Safe Hosts (SomeoneWhoCares)
+* **Smart Filtering**: Removes duplicates and patterns matching API keys or other secrets.
+* **Clean, Sorted Output**: Human‑readable header with metadata, then sorted rules.
+* **Zero‑Touch Deployment**: Only commits when there’s a change; leverages a PAT for secure pushes.
 
 ---
 
-## 📂 Output Preview
+## 🛠️ Quick Start
 
+### Prerequisites
 
+* GitHub repository with write access
+* A Personal Access Token (`PAT_TOKEN`) scoped to push commits
+* (Optional) Local Python 3.x for testing.
+
+### Installation
+
+1. **Clone** or **fork** this repo.
+2. **Add** your token in GitHub:
+
+   1. Go to **Settings → Secrets → Actions**
+   2. Click **New repository secret**
+   3. Name it `PAT_TOKEN`, paste your token, save.
+3. **Review** the workflow at `.github/workflows/update-blocklist.yml`.
+
+### Running Locally
+
+```bash
+git clone https://github.com/<you>/robust-block-list-pro.git
+cd robust-block-list-pro
+python3 generate_list.py
+# results in robust_block_list_pro.txt
+```
+
+---
+
+## 📝 Output Preview
+
+```text
 ! Title: Robust Block List Pro
 ! Description: Combined block list from multiple sources
 ! Total Blocked Items: 153762
@@ -40,46 +63,51 @@
 0.0.0.0 example-malicious-domain.com
 ||tracking.adnetwork.com^
 ||clickbait.example.net^
-⚙️ Tech Stack
-Python 3.x
+...
+```
 
-GitHub Actions
+---
 
-requests Python package
+## ⚙️ Workflow Details
 
-🔐 GitHub Actions Secrets
-Secret Name	Description
-PAT_TOKEN	GitHub Personal Access Token with repo scope for pushing commits
+* **Schedule**: `0 5 * * *` (05:00 UTC daily)
+* **Trigger**: Manual via **Actions → Run workflow**
+* **Steps**:
 
-Add this in your repository:
-Settings > Secrets and Variables > Actions > New repository secret
+  1. Checkout code (no persistent credentials)
+  2. Setup Python 3.x
+  3. Install `requests`
+  4. Run `generate_list.py`
+  5. Commit & push only on changes
 
-📅 Automation Schedule
-⏱ Runs automatically every day at 5:00 AM UTC
+---
 
-▶️ Can also be manually triggered via GitHub Actions → Run workflow
+## 🔮 Roadmap & To‑Do
 
-🚀 To Do / Future Features
- Add domain exclusion support (block exceptions)
+* [ ] Domain exclusion (whitelist exceptions)
+* [ ] Multi‑format exports (AdGuard, hosts, DNSMasq)
+* [ ] Minimal “lite” profile for low‑power devices
+* [ ] GitHub Pages dashboard: stats, charts, downloads
+* [ ] Automated tests for URL liveness and content sanity
 
- Output support for multiple formats (e.g., AdGuard, hosts, raw DNS)
+---
 
- Optional minimal version (for performance)
+## 🤝 Contributing
 
- GitHub Pages dashboard (visual UI, stats, download buttons)
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/name`)
+3. Commit your changes (`git commit -m "feat: description"`)
+4. Push to branch (`git push origin feature/name`)
+5. Open a Pull Request and describe your additions
 
-📄 License
-This project is open-source under the MIT License.
+Please follow the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md).
 
-Created with ❤️ to make the web safer, faster, and more private.
+---
 
+## 📄 License
 
+This project is released under the [MIT License](./LICENSE).
 
+---
 
-
-
-
-
-
-
-
+*created with ❤️ to make your browsing faster, safer, and more private.*
