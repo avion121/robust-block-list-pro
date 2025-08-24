@@ -110,7 +110,28 @@ URLS = [
     "https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts",
     "https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
     "https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
-    "http://winhelp2002.mvps.org/hosts.txt"
+    "http://winhelp2002.mvps.org/hosts.txt",
+
+    # --- GOAT Enhancements Continued ---
+    # Threat Intelligence
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt",
+    # Ads & Tracking
+    "https://v.firebog.net/hosts/AdguardDNS.txt",
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt",
+    # Scam & Fraud
+    "https://raw.githubusercontent.com/blocklistproject/Lists/master/scam.txt",
+    # Crypto Mining
+    "https://raw.githubusercontent.com/blocklistproject/Lists/master/crypto.txt",
+    # Tracking (Extended)
+    "https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
+    # Pop-ups & Annoyances
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/popupads.txt",
+    # Native Trackers
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/native.txt",
+    # Regional/Extended
+    "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
+    # Malware & Risks
+    "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts"
 ]
 
 BASE_HEADER_LINES = [
