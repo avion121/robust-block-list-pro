@@ -3,45 +3,93 @@ import requests
 from datetime import datetime
 import re
 
+# List of block list sources (core + vetted GOAT additions)
 URLS = [
+    # uBlock Origin core filters
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/filters.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/badware.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/privacy.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/quick-fixes.txt",
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/unbreak.txt",
+
+    # EasyList & EasyPrivacy
     "https://easylist.to/easylist/easylist.txt",
     "https://easylist.to/easylist/easyprivacy.txt",
+
+    # Abuse.ch & Feodo Tracker
     "https://feodotracker.abuse.ch/downloads/ipblocklist.txt",
     "https://urlhaus.abuse.ch/downloads/hostfile/",
+
+    # Ad servers & hosts
     "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt",
     "https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/alternates/fakenews-gambling/hosts",
-    "https://big.oisd.nl",
-    "https://o0.pages.dev/Lite/adblock.txt",
     "https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt",
+
+    # Phishing & malware
     "https://malware-filter.gitlab.io/malware-filter/phishing-filter.txt",
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_11_Mobile/filter.txt",
     "https://phishing.army/download/phishing_army_blocklist.txt",
+
+    # Fanboy & Spyware
     "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_3_Spyware/filter.txt",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt",
+
+    # Resource abuse & anti-adblock
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/resource-abuse.txt",
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
     "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt",
+
+    # CoinMiner & Anti-Coin
     "https://zerodot1.gitlab.io/CoinBlockerLists/list.txt",
     "https://raw.githubusercontent.com/CoinBlocker/CoinBlockerLists/master/hosts",
-    "https://github.com/hoshsadiq/adblock-nocoin-list/raw/master/nocoin.txt",
+    "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt",
+
+    # Other anti-adblock
     "https://raw.githubusercontent.com/bogachenko/fuck-anti-adblock/master/fuck-anti-adblock.txt",
+
+    # Adguard filters
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_14_AntiAnnoyances/filter.txt",
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_15_Mobile/filter.txt",
+
+    # SmartTV & IoT
     "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt",
     "https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/hosts.txt",
+
+    # Tracking & Privacy Badger
     "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt",
     "https://raw.githubusercontent.com/EFForg/privacybadger/master/data/trackers.txt",
+
+    # Regional lists
     "https://raw.githubusercontent.com/easylist/easylistjapan/master/easylistjapan.txt",
     "https://raw.githubusercontent.com/ABPindo/indonesianadblockfilters/master/subscriptions/indonesian-list.txt",
     "https://raw.githubusercontent.com/AdnanHussain/ArabList/master/ArabList.txt",
-    "https://easylist.to/easylist/easylistgermany.txt"
+    "https://easylist.to/easylist/easylistgermany.txt",
+
+    # --- Vetted Supplemental GOAT Additions ---
+    # Host-based ad & tracker blocks
+    "https://hosts-file.net/ad_servers.txt",
+    "https://v.firebog.net/hosts/Easyprivacy.txt",
+
+    # Language/region-specific EasyLists
+    "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
+    "https://easylist-downloads.adblockplus.org/easylistfrench.txt",
+    "https://easylist-downloads.adblockplus.org/easylistrussian.txt",
+
+    # AdGuard Chinese ad server filters
+    "https://filters.adtidy.org/extension/chromium/filters/224.txt",
+
+    # Cookie pop-ups
+    "https://easylist-downloads.adblockplus.org/cookiemonster.txt",
+
+    # FireHOL IP blocklists
+    "https://raw.githubusercontent.com/ktsaou/blocklists/master/firehol_level1.netset",
+    "https://raw.githubusercontent.com/ktsaou/blocklists/master/firehol_level2.netset",
+    "https://raw.githubusercontent.com/ktsaou/blocklists/master/firehol_level3.netset",
+
+    # Family & child-safe hosts
+    "https://someonewhocares.org/hosts/hosts"
 ]
 
 BASE_HEADER_LINES = [
