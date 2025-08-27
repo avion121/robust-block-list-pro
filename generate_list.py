@@ -6,51 +6,56 @@ import gzip
 from datetime import datetime
 
 # Output files
-FINAL_FILE = "robust_block_list_pro.txt"
+BALANCED_FILE = "robust_block_list_pro_balanced.txt"
+MONSTER_FILE = "robust_block_list_pro_monster.txt"
 LOG_FILE = "fetch_errors.log"
 META_FILE = "fetch_meta.json"
 
-# Blocklist sources
-BLOCKLIST_URLS = [
-    "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
-    "https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt",
+# --------------------
+# BLOCKLIST SOURCES
+# --------------------
+
+BALANCED_URLS = [
+    # Core curated safe sources
+    "https://big.oisd.nl/",  # OISD full
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/multi.txt",
     "https://raw.githubusercontent.com/badmojr/1Hosts/main/Lite/hosts.txt",
+    "https://urlhaus.abuse.ch/downloads/hostfile/",
     "https://phishing.army/download/phishing_army_blocklist_extended.txt",
     "https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
     "https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt",
-    "https://urlhaus.abuse.ch/downloads/hostfile/",
-    "https://v.firebog.net/hosts/AdguardDNS.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/anti.piracy.txt",
-    "https://easylist-downloads.adblockplus.org/easylistgermany.txt",
-    "https://easylist-downloads.adblockplus.org/indianlist%2Beasylist.txt",
-    "https://easylist-downloads.adblockplus.org/liste_fr.txt",
-    "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
-    "https://easylist-downloads.adblockplus.org/easylistchina.txt",
-    "https://easylist-downloads.adblockplus.org/easylist_russia.txt",
-    "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
-    "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
-    "https://easylist-downloads.adblockplus.org/easylistportuguese.txt",
-    "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt",
-    "https://easylist-downloads.adblockplus.org/israellist.txt",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
-    "https://filters.adtidy.org/extension/ublock/filters/3.txt",
-    "https://filters.adtidy.org/extension/ublock/filters/4.txt",
-    "https://filters.adtidy.org/extension/ublock/filters/10.txt",
-    "https://filters.adtidy.org/extension/ublock/filters/11.txt",
-    "https://filters.adtidy.org/extension/ublock/filters/14.txt",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/GameConsoleAdblockList.txt",
     "https://www.spamhaus.org/drop/drop.txt",
-    "https://big.oisd.nl/",
-    "https://dbl.oisd.nl/",
-    "https://hosts.oisd.nl/",
+    "https://filters.adtidy.org/extension/ublock/filters/3.txt",   # Tracking
+    "https://filters.adtidy.org/extension/ublock/filters/4.txt",   # Social
+    "https://filters.adtidy.org/extension/ublock/filters/11.txt",  # Mobile ads
+    "https://filters.adtidy.org/extension/ublock/filters/14.txt",  # Annoyances
     "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt",
     "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt",
 ]
 
-# Whitelists
+MONSTER_URLS = BALANCED_URLS + [
+    # Hagezi Ultimate Tiers
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/ultimate.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/anti.piracy.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/gambling.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/fake.txt",
+    # Extra OISD sources
+    "https://dbl.oisd.nl/",
+    "https://hosts.oisd.nl/",
+    # StevenBlack unified hosts
+    "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+    # 1Hosts Pro
+    "https://raw.githubusercontent.com/badmojr/1Hosts/main/Pro/hosts.txt",
+    # DandelionSprout extras
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/GameConsoleAdblockList.txt",
+]
+
+# --------------------
+# WHITELIST SOURCES
+# --------------------
 WHITELIST_URLS = [
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt",
     "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt",
@@ -59,103 +64,74 @@ WHITELIST_URLS = [
 ]
 
 # --------------------
-# Helpers
+# HELPERS
 # --------------------
 
-def log_error(message: str):
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(f"[{datetime.utcnow().isoformat()}] {message}\n")
-
-def load_meta():
-    if os.path.exists(META_FILE):
-        try:
-            with open(META_FILE, "r", encoding="utf-8") as fh:
-                return json.load(fh)
-        except Exception:
-            return {}
-    return {}
-
-def save_meta(meta):
+def fetch_url(url):
     try:
-        with open(META_FILE, "w", encoding="utf-8") as fh:
-            json.dump(meta, fh, indent=2)
-    except Exception as e:
-        log_error(f"[META WRITE ERROR] {e}")
-
-def fetch_list(url):
-    try:
-        resp = requests.get(url, timeout=40, headers={"Accept-Encoding": "identity"})
+        headers = {"User-Agent": "Mozilla/5.0"}
+        resp = requests.get(url, headers=headers, timeout=60)
         resp.raise_for_status()
-        content = resp.content
-
-        # Manual gzip handling if needed
-        if content[:2] == b"\x1f\x8b":
-            try:
-                return gzip.decompress(content).decode("utf-8", errors="ignore").splitlines()
-            except Exception as e:
-                log_error(f"Manual gzip failed for {url}: {e}")
-                return []
-
-        return resp.text.splitlines()
-
+        if url.endswith(".gz"):
+            return gzip.decompress(resp.content).decode("utf-8", errors="ignore")
+        return resp.text
     except Exception as e:
-        log_error(f"Fetch failed for {url}: {e}")
-        return []
+        with open(LOG_FILE, "a") as log:
+            log.write(f"[{datetime.utcnow().isoformat()}] Fetch failed for {url}: {e}\n")
+        return ""
 
-# --------------------
-# Main
-# --------------------
-
-def main():
-    meta = load_meta()
-    combined = set()
-    whitelist = set()
-
-    # Reset logs
-    open(LOG_FILE, "w").close()
-
-    # Load whitelist
-    for url in WHITELIST_URLS:
-        whitelist.update(fetch_list(url))
-
-    # Load blocklists
-    for url in BLOCKLIST_URLS:
-        lines = fetch_list(url)
-        if not lines:
-            continue
-        for line in lines:
+def process_list(urls):
+    domains = set()
+    for url in urls:
+        text = fetch_url(url)
+        for line in text.splitlines():
             line = line.strip()
-            if not line or line.startswith(("!", "#", "[", "@@")):
+            if not line or line.startswith("#"):
                 continue
-
-            # Hosts format
-            if line.startswith("0.0.0.0") or line.startswith("127.0.0.1"):
+            # Extract domain from different formats
+            if line.startswith(("0.0.0.0", "127.0.0.1")):
                 parts = line.split()
-                if len(parts) >= 2:
-                    domain = parts[1]
-                    if domain not in whitelist:
-                        combined.add(f"||{domain}^")
+                if len(parts) > 1:
+                    domains.add(parts[1])
+            elif line.startswith("||") and line.endswith("^"):
+                domains.add(line[2:-1])
+            elif line.startswith("||"):
+                domains.add(line[2:])
+            elif line.startswith("|http") or line.startswith("@@"):
+                continue
+            elif "/" in line or line.startswith("."):
+                continue
+            else:
+                domains.add(line)
+    return domains
 
-            # ABP/uBO format
-            elif line.startswith(("||", "/", ".", "*")):
-                if line not in whitelist:
-                    combined.add(line)
+def save_list(domains, whitelist, filename):
+    final = sorted(domains - whitelist)
+    with open(filename, "w") as f:
+        f.write("\n".join(final))
+    return len(final)
 
-            # Plain domains
-            elif "." in line and " " not in line:
-                if line not in whitelist:
-                    combined.add(f"||{line}^")
-
-    # Write output
-    with open(FINAL_FILE, "w", encoding="utf-8") as f:
-        f.write("! Title: Robust Block List Pro (Unified)\n")
-        f.write(f"! Updated: {datetime.utcnow().isoformat()} UTC\n")
-        for rule in sorted(combined):
-            f.write(rule + "\n")
-
-    # Save metadata
-    meta["last_update"] = datetime.utcnow().isoformat()
-    save_meta(meta)
-
+# --------------------
+# MAIN
+# --------------------
 if __name__ == "__main__":
-    main()
+    if os.path.exists(LOG_FILE):
+        os.remove(LOG_FILE)
+
+    whitelist = process_list(WHITELIST_URLS)
+
+    balanced = process_list(BALANCED_URLS)
+    balanced_count = save_list(balanced, whitelist, BALANCED_FILE)
+
+    monster = process_list(MONSTER_URLS)
+    monster_count = save_list(monster, whitelist, MONSTER_FILE)
+
+    meta = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "balanced_entries": balanced_count,
+        "monster_entries": monster_count,
+        "balanced_file": BALANCED_FILE,
+        "monster_file": MONSTER_FILE,
+    }
+    with open(META_FILE, "w") as f:
+        json.dump(meta, f, indent=2)
