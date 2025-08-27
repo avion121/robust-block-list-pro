@@ -2,11 +2,11 @@
 import os
 import json
 import requests
+import gzip
 from datetime import datetime
 
-# Output files
-ABP_FILE = "robust_block_list_pro_abp.txt"
-HOSTS_FILE = "robust_block_list_pro_hosts.txt"
+# Output
+FINAL_FILE = "robust_block_list_pro.txt"
 LOG_FILE = "fetch_errors.log"
 META_FILE = "fetch_meta.json"
 
@@ -14,7 +14,7 @@ META_FILE = "fetch_meta.json"
 BLOCKLIST_URLS = [
     "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
     "https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt",
-    "https://o0.pages.dev/Lite/hosts",
+    "https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/hosts",  # ✅ replaced dead o0.pages.dev
     "https://phishing.army/download/phishing_army_blocklist_extended.txt",
     "https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
     "https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
@@ -29,7 +29,7 @@ BLOCKLIST_URLS = [
     "https://easylist-downloads.adblockplus.org/liste_fr.txt",
     "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
     "https://easylist-downloads.adblockplus.org/easylistchina.txt",
-    "https://easylist-downloads.adblockplus.org/easylist_russia.txt",
+    "https://easylist-downloads.adblockplus.org/easylist_russia.txt",  # ✅ gzip fix
     "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
     "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
     "https://easylist-downloads.adblockplus.org/easylistportuguese.txt",
@@ -50,6 +50,7 @@ BLOCKLIST_URLS = [
     "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt",
 ]
 
+# Whitelist sources
 WHITELIST_URLS = [
     "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt",
     "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt",
@@ -83,8 +84,16 @@ def save_meta(meta):
 
 def fetch_list(url):
     try:
-        resp = requests.get(url, timeout=30)
+        resp = requests.get(url, timeout=40)
         resp.raise_for_status()
+        content = resp.content
+
+        # ✅ handle bad gzip encoding from ABP servers
+        if resp.headers.get("Content-Encoding", "") == "gzip":
+            try:
+                return gzip.decompress(content).decode("utf-8").splitlines()
+            except Exception:
+                return resp.text.splitlines()
         return resp.text.splitlines()
     except Exception as e:
         log_error(f"Fetch failed for {url}: {e}")
@@ -96,8 +105,7 @@ def fetch_list(url):
 
 def main():
     meta = load_meta()
-    combined_abp = set()
-    combined_hosts = set()
+    rules = set()
     whitelist = set()
 
     # Reset logs
@@ -117,35 +125,29 @@ def main():
             if not line or line.startswith(("!", "#", "[", "@@")):
                 continue
 
-            # Hosts format
-            if line.startswith("0.0.0.0") or line.startswith("127.0.0.1"):
+            # Hosts-style
+            if line.startswith(("0.0.0.0", "127.0.0.1")):
                 parts = line.split()
                 if len(parts) >= 2:
                     domain = parts[1]
                     if domain not in whitelist:
-                        combined_hosts.add(domain)
-                        combined_abp.add(f"||{domain}^")
+                        rules.add(f"||{domain}^")
 
-            # ABP/uBO format (rules)
+            # ABP/uBO rules
             elif line.startswith(("||", "/", ".", "*")):
                 if line not in whitelist:
-                    combined_abp.add(line)
+                    rules.add(line)
 
             # Plain domains
             elif "." in line and " " not in line:
                 if line not in whitelist:
-                    combined_hosts.add(line)
-                    combined_abp.add(f"||{line}^")
+                    rules.add(f"||{line}^")
 
-    # Write outputs
-    with open(HOSTS_FILE, "w", encoding="utf-8") as f:
-        for domain in sorted(combined_hosts):
-            f.write(f"0.0.0.0 {domain}\n")
-
-    with open(ABP_FILE, "w", encoding="utf-8") as f:
-        f.write("! Title: Robust Block List Pro\n")
+    # Write single final list
+    with open(FINAL_FILE, "w", encoding="utf-8") as f:
+        f.write("! Title: Robust Block List Pro (Unified)\n")
         f.write(f"! Updated: {datetime.utcnow().isoformat()} UTC\n")
-        for rule in sorted(combined_abp):
+        for rule in sorted(rules):
             f.write(rule + "\n")
 
     # Save metadata
