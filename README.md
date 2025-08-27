@@ -8,9 +8,9 @@
 Ultimate GOAT blocklists — generated daily with curated sources.
 
 ## 📊 Stats
-- **Balanced List**: 344,702 entries  
-- **Monster List**: 1,787,010 entries  
-- **Last Updated**: 2025-08-27 09:55:02 UTC
+- **Balanced List**: 344,701 entries  
+- **Monster List**: 1,787,009 entries  
+- **Last Updated**: 2025-08-27 10:06:28 UTC
 
 ## 📥 Download
 - [Balanced List](./robust_block_list_pro_balanced.txt)  
