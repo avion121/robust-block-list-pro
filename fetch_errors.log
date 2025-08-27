@@ -1,0 +1,2 @@
+[2025-08-27T04:42:04.235766] Fetch failed for https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/hosts: 404 Client Error: Not Found for url: https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/hosts
+[2025-08-27T04:42:19.322985] Fetch failed for https://easylist-downloads.adblockplus.org/easylist_russia.txt: ('Received response with content-encoding: gzip, but failed to decode it.', error('Error -3 while decompressing data: incorrect header check'))
