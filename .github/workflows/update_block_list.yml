@@ -1,13 +1,14 @@
-name: Generate Robust Block Lists
+name: Generate Blocklists
 
 on:
   schedule:
-    - cron: "0 3 * * *"   # every day at 03:00 UTC
-  workflow_dispatch:
+    - cron: "0 0 * * *"   # Run daily at midnight UTC
+  workflow_dispatch:       # Allow manual runs
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -18,15 +19,32 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install requests
+        run: |
+          pip install requests
 
-      - name: Generate lists
-        run: python generate_list.py
+      - name: Run generator
+        run: |
+          python generate_list.py
 
       - name: Commit and push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add robust_block_list_pro_balanced.txt robust_block_list_pro_monster.txt fetch_meta.json fetch_errors.log
-          git commit -m "Update Robust Block Lists - $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+          
+          # Add only existing files
+          git add robust_block_list_pro_balanced.txt || true
+          git add robust_block_list_pro_monster.txt || true
+          git add fetch_meta.json || true
+          [ -f fetch_errors.log ] && git add fetch_errors.log
+          [ -f README.md ] && git add README.md
+          
+          git commit -m "Update lists & README - $(date -u +%Y-%m-%d)" || echo "No changes to commit"
           git push
+
+      - name: Upload lists as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: blocklists
+          path: |
+            robust_block_list_pro_balanced.txt
+            robust_block_list_pro_monster.txt
