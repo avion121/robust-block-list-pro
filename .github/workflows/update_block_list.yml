@@ -14,12 +14,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4   # Updated to latest version for reliability
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"    # Stable Python version
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -40,9 +40,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add robust_block_list_pro_abp.txt robust_block_list_pro_hosts.txt fetch_errors.log fetch_meta.json || true
+          git add robust_block_list_pro.txt fetch_errors.log fetch_meta.json || true
           if ! git diff --cached --quiet; then
-            git commit -m "Update Robust Block List Pro (combined) - $(date -u +%Y-%m-%d)"
+            git commit -m "Update Robust Block List Pro - $(date -u +%Y-%m-%d)"
             git pull --rebase origin main || true
             git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
           else
