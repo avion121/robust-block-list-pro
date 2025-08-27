@@ -1,2 +1,0 @@
-[2025-08-27T04:22:22.726159] Fetch failed for https://o0.pages.dev/Lite/hosts: 404 Client Error: Not Found for url: https://o0.pages.dev/Lite/hosts
-[2025-08-27T04:22:34.426865] Fetch failed for https://easylist-downloads.adblockplus.org/easylist_russia.txt: ('Received response with content-encoding: gzip, but failed to decode it.', error('Error -3 while decompressing data: incorrect header check'))
