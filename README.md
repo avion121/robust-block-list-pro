@@ -2,15 +2,15 @@
 
 ![Balanced Entries](https://img.shields.io/badge/Balanced_Entries-344k-blue)
 ![Monster Entries](https://img.shields.io/badge/Monster_Entries-1M-red)
-![Last Updated](https://img.shields.io/badge/Last_Updated-2025--08--27-success)
+![Last Updated](https://img.shields.io/badge/Last_Updated-2025--08--28-success)
 ![Build](https://github.com/avion121/robust-block-list-pro/actions/workflows/run.yml/badge.svg)
 
 Ultimate GOAT blocklists — generated daily with curated sources.
 
 ## 📊 Stats
-- **Balanced List**: 344,701 entries  
-- **Monster List**: 1,787,009 entries  
-- **Last Updated**: 2025-08-27 10:06:28 UTC
+- **Balanced List**: 344,965 entries  
+- **Monster List**: 1,788,723 entries  
+- **Last Updated**: 2025-08-28 01:17:49 UTC
 
 ## 📥 Download
 - [Balanced List](./robust_block_list_pro_balanced.txt)  
