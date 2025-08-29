@@ -1,3 +1,9 @@
-https://easylist.to/easylist/easylist_cookie/easylist_cookie_general_block.txt => HTTP 404
-https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/hosts.txt => HTTP 404
-https://filterlists.com/ => HTTP 403
+[2025-08-29 04:49:54.308387] https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/ads.txt returned 404
+[2025-08-29 04:49:54.394298] https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tracking.txt returned 404
+[2025-08-29 04:49:56.102929] https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist failed: HTTPSConnectionPool(host='zeustracker.abuse.ch', port=443): Max retries exceeded with url: /blocklist.php?download=domainblocklist (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f32330dda90>: Failed to resolve 'zeustracker.abuse.ch' ([Errno -2] Name or service not known)"))
+[2025-08-29 04:49:56.547333] https://feodotracker.abuse.ch/downloads/feodohosts.txt returned 404
+[2025-08-29 04:49:57.322970] http://mirror.cedia.org.ec/malwaredomains/justdomains returned 404
+[2025-08-29 04:49:59.018521] https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus-lite.txt returned 404
+[2025-08-29 04:50:02.609471] https://v.firebog.net/hosts/Tick.txt returned 404
+[2025-08-29 04:50:03.604485] https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus-lite.txt returned 404
+[2025-08-29 04:50:04.512284] https://raw.githubusercontent.com/hagezi/dns-blocklists/main/whitelist.txt returned 404
