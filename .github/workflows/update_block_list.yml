@@ -2,58 +2,35 @@ name: Update Block Lists
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Runs daily at midnight UTC
+    - cron: "0 0 * * *"   # every day at midnight UTC
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.x"
 
-      - name: Install dependencies
+      - name: Install deps
         run: pip install requests
 
       - name: Run generator
         run: python generate_list.py
 
-      - name: Setup Git LFS
+      - name: Commit & push changes
         run: |
-          git lfs install
-          git lfs track "*.txt"
-          git add .gitattributes
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add robust_block_list_pro_combined.txt || true
-          git add robust_block_list_ios_lite.txt || true
-          git add fetch_meta.json || true
-          [ -f fetch_errors.log ] && git add fetch_errors.log
-          [ -f README.md ] && git add README.md
-          [ -f CHANGELOG.md ] && git add CHANGELOG.md
-
-          git commit -m "Update block lists & metadata - $(date -u +%Y-%m-%d)" || echo "No changes to commit"
-          git push origin main
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: blocklists
-          path: |
-            robust_block_list_pro_combined.txt
-            robust_block_list_ios_lite.txt
-            fetch_meta.json
-            README.md
-            CHANGELOG.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add robust_block_list_pro_combined.txt
+          git add robust_block_list_ios_lite.txt
+          git add CHANGELOG.md
+          git add fetch_errors.log
+          git add README.md
+          git commit -m "chore: update blocklists ($(date -u +%Y-%m-%d))" || echo "No changes to commit"
+          git push
