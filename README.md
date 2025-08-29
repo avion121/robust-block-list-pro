@@ -4,8 +4,8 @@ Single combined hosts-format blocklist generated from the full set of sources
 discussed in the repository's conversation.
 
 - Combined file: robust_block_list_pro_combined.txt
-- Entries: 2,158,498
-- Last updated (UTC): 2025-08-29 02:18:31 UTC
+- Entries: 2,158,502
+- Last updated (UTC): 2025-08-29 02:25:27 UTC
 
 Sources included: EasyList, EasyPrivacy, EasyList Cookie, Fanboy (uBO & easylist),
 Prebake, NoCoin, DandelionSprout (LegitURLShortener & Anti-Malware),
