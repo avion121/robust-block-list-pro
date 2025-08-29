@@ -21,7 +21,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install --upgrade pip && pip install requests
+        run: pip install requests
 
       - name: Run generator
         run: python generate_list.py
@@ -29,8 +29,8 @@ jobs:
       - name: Setup Git LFS
         run: |
           git lfs install
-          git lfs track "*.txt" || true
-          git add .gitattributes || true
+          git lfs track "*.txt"
+          git add .gitattributes
 
       - name: Commit and push changes
         run: |
@@ -39,7 +39,7 @@ jobs:
 
           git add robust_block_list_pro_combined.txt || true
           git add fetch_meta.json || true
-          [ -f fetch_errors.log ] && git add fetch_errors.log
+          [ -f fetch_errors.log ] && git add -f fetch_errors.log   # force add even if ignored
           [ -f README.md ] && git add README.md
           [ -f CHANGELOG.md ] && git add CHANGELOG.md
 
@@ -49,7 +49,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: blocklist
+          name: blocklists
           path: |
             robust_block_list_pro_combined.txt
             fetch_meta.json
