@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          lfs: true   # Make sure Git LFS files are pulled
+          lfs: true
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -38,12 +38,13 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           git add robust_block_list_pro_combined.txt || true
+          git add robust_block_list_ios_lite.txt || true
           git add fetch_meta.json || true
-          [ -f fetch_errors.log ] && git add -f fetch_errors.log   # force add even if ignored
+          [ -f fetch_errors.log ] && git add fetch_errors.log
           [ -f README.md ] && git add README.md
           [ -f CHANGELOG.md ] && git add CHANGELOG.md
 
-          git commit -m "Update combined block list & metadata - $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+          git commit -m "Update block lists & metadata - $(date -u +%Y-%m-%d)" || echo "No changes to commit"
           git push origin main
 
       - name: Upload artifact
@@ -52,7 +53,7 @@ jobs:
           name: blocklists
           path: |
             robust_block_list_pro_combined.txt
+            robust_block_list_ios_lite.txt
             fetch_meta.json
-            fetch_errors.log
             README.md
             CHANGELOG.md
