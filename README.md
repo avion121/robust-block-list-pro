@@ -1,8 +1,8 @@
 # 🛡️ Robust Block List Pro
 
-![Last Updated](https://img.shields.io/badge/Last%20Updated-2025-08-29%2012:24:44%20UTC-blue)
-![Monster Domains](https://img.shields.io/badge/Monster%20Domains-539378-brightgreen)
-![iOS Lite Domains](https://img.shields.io/badge/iOS%20Lite%20Domains-508832-yellow)
+![Last Updated](https://img.shields.io/badge/Last%20Updated-2025-08-29%2018:18:04%20UTC-blue)
+![Monster Domains](https://img.shields.io/badge/Monster%20Domains-539451-brightgreen)
+![iOS Lite Domains](https://img.shields.io/badge/iOS%20Lite%20Domains-508906-yellow)
 
 Automatically updated ultimate blocklists for ads, trackers, malware, and telemetry.
 
@@ -55,6 +55,7 @@ _Tip: If you experience app/site breakage on mobile, switch to iOS Lite._
 - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/multi.txt
 
 ## 📜 Changelog
+- **2025-08-29 18:18:04 UTC** → Monster: `539451` domains, iOS Lite: `508906` domains
 - **2025-08-29 12:24:44 UTC** → Monster: `539378` domains, iOS Lite: `508832` domains
 - **2025-08-29 06:19:52 UTC** → Monster: `538813` domains, iOS Lite: `508267` domains
 - **2025-08-29 05:31:42 UTC** → Monster: `538813` domains, iOS Lite: `508267` domains
