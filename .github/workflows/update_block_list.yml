@@ -21,7 +21,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install --upgrade pip && pip install requests
 
       - name: Run generator
         run: python generate_list.py
@@ -29,28 +29,30 @@ jobs:
       - name: Setup Git LFS
         run: |
           git lfs install
-          git lfs track "*.txt"
-          git add .gitattributes
+          git lfs track "*.txt" || true
+          git add .gitattributes || true
 
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add only existing files
-          git add robust_block_list_pro_balanced.txt || true
-          git add robust_block_list_pro_monster.txt || true
+          git add robust_block_list_pro_combined.txt || true
           git add fetch_meta.json || true
           [ -f fetch_errors.log ] && git add fetch_errors.log
           [ -f README.md ] && git add README.md
+          [ -f CHANGELOG.md ] && git add CHANGELOG.md
 
-          git commit -m "Update lists & README - $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+          git commit -m "Update combined block list & metadata - $(date -u +%Y-%m-%d)" || echo "No changes to commit"
           git push origin main
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: blocklists
+          name: blocklist
           path: |
-            robust_block_list_pro_balanced.txt
-            robust_block_list_pro_monster.txt
+            robust_block_list_pro_combined.txt
+            fetch_meta.json
+            fetch_errors.log
+            README.md
+            CHANGELOG.md
