@@ -1,236 +1,164 @@
 #!/usr/bin/env python3
-import hashlib
-import requests
-import datetime
-import os
+import requests, datetime, os
 
-# --------------------------
-# SOURCE LISTS
-# --------------------------
-BLOCKLISTS_MONSTER = [
-    # General / Multi-Purpose
-    "https://big.oisd.nl/",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt",
-    "https://raw.githubusercontent.com/badmojr/1Hosts/master/Pro/domains.txt",
-    "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-    "https://block.energized.pro/blu/formats/hosts.txt",
-    "https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
+# ===============================
+# File Paths
+# ===============================
+COMBINED_OUTPUT = "robust_block_list_pro_combined.txt"
+IOS_LITE_OUTPUT = "robust_block_list_ios_lite.txt"
+README = "README.md"
+FETCH_LOG = "fetch_errors.log"
 
-    # Ads / Tracking
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt",
-    "https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/ads.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tracking.txt",
-    "https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/domains.txt",
-
-    # Malware / Security
-    "https://urlhaus.abuse.ch/downloads/hostfile/",
-    "https://phishing.army/download/phishing_army_blocklist.txt",
-    "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist",
-    "https://feodotracker.abuse.ch/downloads/feodohosts.txt",
-    "http://mirror.cedia.org.ec/malwaredomains/justdomains",
-    "http://cybercrime-tracker.net/all.php",
-    "https://filters.adtidy.org/extension/ublock/filters/15.txt",
-
-    # Privacy / Telemetry
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus-lite.txt",
-    "https://filters.adtidy.org/extension/ublock/filters/11.txt",
-    "https://block.energized.pro/spark/formats/hosts.txt",
-
-    # Regional / Special Purpose
+# ===============================
+# Sources
+# ===============================
+SOURCES_MONSTER = [
     "https://adaway.org/hosts.txt",
-    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareAdGuard.txt",
-    "https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt",
-    "https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt",
-    "https://v.firebog.net/hosts/Tick.txt",
-    "https://v.firebog.net/hosts/Prigent-Ads.txt",
+    "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_1_Base/filter.txt",
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_2_Spyware/filter.txt",
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_3_Social/filter.txt",
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_4_Annoyances/filter.txt",
+    "https://curben.gitlab.io/malware-filter/urlhaus-filter-domains.txt",
+    "https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/GameConsoleAdblockList.txt",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
+    "https://someonewhocares.org/hosts/hosts",
+    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext",
+    "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt",
+    "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt",
+    "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
+    "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt",
+    "https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-blocklist.txt",
+    "https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt",
+    "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts",
+    "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts",
+    "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Dead/hosts",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/multi.txt"
 ]
 
-BLOCKLISTS_IOS_LITE = [
-    "https://small.oisd.nl/",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus-lite.txt",
-    "https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/domains.txt",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt",
-    "https://phishing.army/download/phishing_army_blocklist.txt",
-    "https://urlhaus.abuse.ch/downloads/hostfile/",
+SOURCES_IOS_LITE = [
+    "https://adaway.org/hosts.txt",
+    "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_1_Base/filter.txt",
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_2_Spyware/filter.txt",
+    "https://curben.gitlab.io/malware-filter/urlhaus-filter-domains.txt",
+    "https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/multi.txt"
 ]
 
-WHITELISTS = [
-    "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/whitelist.txt"
-]
-
-# --------------------------
-# HELPERS
-# --------------------------
+# ===============================
+# Fetch Utility
+# ===============================
 def fetch_list(url):
     try:
         r = requests.get(url, timeout=30)
-        if r.status_code == 200:
-            return r.text.splitlines()
-        else:
-            log_error(f"{url} returned {r.status_code}")
+        r.raise_for_status()
+        lines = r.text.splitlines()
+        domains = set()
+        for line in lines:
+            line = line.strip()
+            if not line or line.startswith(("#", "!", "//")):
+                continue
+            if line.startswith("0.0.0.0") or line.startswith("127.0.0.1"):
+                parts = line.split()
+                if len(parts) > 1:
+                    domains.add(parts[1].lower())
+            elif line.startswith(("||", ".")):
+                domains.add(line.lstrip("|.").split("^")[0].lower())
+            elif " " not in line and "." in line:
+                domains.add(line.lower())
+        return domains, None
     except Exception as e:
-        log_error(f"{url} failed: {e}")
-    return []
+        return set(), f"{url} failed: {e}"
 
-def log_error(msg):
-    with open("fetch_errors.log", "a", encoding="utf-8") as f:
-        f.write(f"[{datetime.datetime.utcnow()}] {msg}\n")
-
-def normalize(lines):
-    result = set()
-    for line in lines:
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        if line.startswith("0.0.0.0 ") or line.startswith("127.0.0.1 "):
-            line = line.split(" ", 1)[1]
-        result.add(line.lower())
-    return result
-
-def save_list(domains, filename):
-    with open(filename, "w", encoding="utf-8") as f:
-        for d in sorted(domains):
+# ===============================
+# Generate
+# ===============================
+def generate_blocklist(sources, output_file):
+    all_domains = set()
+    results = {}
+    errors = []
+    for url in sources:
+        domains, err = fetch_list(url)
+        if err:
+            errors.append(f"[{datetime.datetime.utcnow()}] {err}\n")
+        results[url] = len(domains)
+        all_domains.update(domains)
+    with open(output_file, "w") as f:
+        for d in sorted(all_domains):
             f.write(d + "\n")
+    return results, len(all_domains), errors
 
-def sha256sum(filename):
-    h = hashlib.sha256()
-    with open(filename, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            h.update(chunk)
-    return h.hexdigest()
+# ===============================
+# README Generator
+# ===============================
+def generate_readme(results_monster, results_ios, monster_count, ios_count):
+    last_updated = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-# --------------------------
-# MAIN
-# --------------------------
-def main():
-    os.makedirs(".", exist_ok=True)
+    # prepare changelog entry
+    changelog_entry = f"- **{last_updated}** → Monster: `{monster_count}` domains, iOS Lite: `{ios_count}` domains\n"
 
-    # Reset fetch log
-    open("fetch_errors.log", "w").close()
+    # read old changelog
+    old_changelog = []
+    if os.path.exists(README):
+        with open(README, "r") as old:
+            lines = old.readlines()
+            if "## 📜 Changelog" in "".join(lines):
+                idx = lines.index("## 📜 Changelog\n")
+                old_changelog = lines[idx+1:]
 
-    # Fetch blocklists
-    monster = set()
-    ioslite = set()
-    whitelist = set()
+    combined_changelog = [changelog_entry] + old_changelog
+    combined_changelog = combined_changelog[:4]  # keep 4 entries max
 
-    for url in BLOCKLISTS_MONSTER:
-        monster |= normalize(fetch_list(url))
+    with open(README, "w") as f:
+        f.write("# 🛡️ Robust Block List Pro\n\n")
+        f.write(f"![Last Updated](https://img.shields.io/badge/Last%20Updated-{last_updated.replace(' ', '%20')}-blue)\n")
+        f.write(f"![Monster Domains](https://img.shields.io/badge/Monster%20Domains-{monster_count}-brightgreen)\n")
+        f.write(f"![iOS Lite Domains](https://img.shields.io/badge/iOS%20Lite%20Domains-{ios_count}-yellow)\n\n")
+        f.write("Automatically updated ultimate blocklists for ads, trackers, malware, and telemetry.\n\n")
 
-    for url in BLOCKLISTS_IOS_LITE:
-        ioslite |= normalize(fetch_list(url))
+        # 📥 downloads
+        f.write("## 📥 Direct Downloads\n")
+        f.write(f"[![Download Monster](https://img.shields.io/badge/Download-Monster-blue)](https://raw.githubusercontent.com/avion121/robust-block-list-pro/main/{COMBINED_OUTPUT})\n")
+        f.write(f"[![Download iOS Lite](https://img.shields.io/badge/Download-iOS%20Lite-orange)](https://raw.githubusercontent.com/avion121/robust-block-list-pro/main/{IOS_LITE_OUTPUT})\n\n")
 
-    for url in WHITELISTS:
-        whitelist |= normalize(fetch_list(url))
+        # 📦 variants
+        f.write("## 📦 Blocklist Variants\n")
+        f.write("- **Monster (Full)** → `robust_block_list_pro_combined.txt`\n")
+        f.write("- **iOS Lite (Safe Subset)** → `robust_block_list_ios_lite.txt`\n\n")
 
-    # Apply whitelist
-    monster -= whitelist
-    ioslite -= whitelist
+        # ✅ usage
+        f.write("## ✅ Recommended Usage\n")
+        f.write("- **Monster (Full)** → Best for desktops, routers, and power users.\n")
+        f.write("- **iOS Lite (Safe Subset)** → Optimized for iOS/Android apps.\n\n")
+        f.write("_Tip: If you experience app/site breakage on mobile, switch to iOS Lite._\n\n")
 
-    # Save outputs
-    save_list(monster, "robust_block_list_pro_combined.txt")
-    save_list(ioslite, "robust_block_list_ios_lite.txt")
+        # 🔗 sources
+        f.write("## 🔗 Sources\n")
+        f.write("### Monster (22 lists)\n")
+        for url in SOURCES_MONSTER:
+            f.write(f"- {url}\n")
+        f.write("\n### iOS Lite (7 lists)\n")
+        for url in SOURCES_IOS_LITE:
+            f.write(f"- {url}\n")
 
-    # Write changelog
-    with open("CHANGELOG.md", "a", encoding="utf-8") as f:
-        f.write(f"## {datetime.date.today()}\n")
-        f.write(f"- Combined: {len(monster)} domains (sha256: {sha256sum('robust_block_list_pro_combined.txt')})\n")
-        f.write(f"- iOS Lite: {len(ioslite)} domains (sha256: {sha256sum('robust_block_list_ios_lite.txt')})\n\n")
+        # 📜 changelog
+        f.write("\n## 📜 Changelog\n")
+        for entry in combined_changelog:
+            f.write(entry)
 
-    # Generate README.md (always fresh)
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(README_TEMPLATE)
-
-# --------------------------
-# README TEMPLATE
-# --------------------------
-README_TEMPLATE = """# 🚀 Robust Block List Pro
-
-Ultimate **privacy-first blocklist collection** for ads, trackers, malware, phishing, telemetry & spam.  
-Two flavors are maintained automatically with daily updates.
-
----
-
-## 🔥 Flavors
-
-| List | Size | Recommended For | File |
-|------|------|-----------------|------|
-| ✅ **Monster Combined** (29 sources) | Millions of domains | Pi-hole, AdGuard, NextDNS, Brave/Firefox/Chrome (desktop) | [robust_block_list_pro_combined.txt](./robust_block_list_pro_combined.txt) |
-| 📱 **iOS Lite (Crash-Free)** | ~50K domains | Brave iOS, Safari, mobile browsers (stable) | [robust_block_list_ios_lite.txt](./robust_block_list_ios_lite.txt) |
-
----
-
-## 📦 Sources
-
-### ✅ Monster (29 sources)
-Includes **all major curated blocklists** for maximum coverage:
-
-- OISD Big  
-- HaGeZi Pro++  
-- 1Hosts Pro  
-- StevenBlack Hosts  
-- Energized Blu  
-- GoodbyeAds  
-- Disconnect (Ads, Tracking)  
-- Notracking  
-- HaGeZi Ads / Tracking  
-- 1Hosts Lite  
-- URLHaus  
-- Phishing Army  
-- Zeus Tracker  
-- Feodo Tracker  
-- MalwareDomains  
-- CyberCrime Tracker  
-- AdGuard DNS Filter  
-- HaGeZi Pro++ Lite  
-- AdGuard Mobile  
-- Energized Spark  
-- AdAway  
-- Yoyo  
-- DandelionSprout Anti-Malware  
-- KADhosts  
-- Frogeye Trackers  
-- Firebog Tick  
-- Firebog Prigent-Ads  
-
-### 📱 iOS Lite (Crash-Free Subset)
-Selected for stability + smaller size:
-
-- OISD Small  
-- HaGeZi Pro++ Lite  
-- 1Hosts Lite  
-- Disconnect (Ads, Tracking)  
-- Phishing Army  
-- URLHaus  
-
----
-
-## 📥 Downloads
-- **Monster Combined** → [robust_block_list_pro_combined.txt](./robust_block_list_pro_combined.txt)  
-- **iOS Lite** → [robust_block_list_ios_lite.txt](./robust_block_list_ios_lite.txt)  
-
----
-
-## 🛠️ Metadata
-- SHA256 hashes recorded in [`CHANGELOG.md`](./CHANGELOG.md)  
-- Fetch errors (if any) stored in [`fetch_errors.log`](./fetch_errors.log)  
-- Auto-updated **daily** via GitHub Actions  
-
----
-
-## ⚡ Notes
-- Use **Monster** for maximum protection (desktop / servers).  
-- Use **iOS Lite** for Brave iOS & Safari (to avoid crashes).  
-- Whitelists (AnudeepND, HaGeZi) are applied to minimize breakage.  
-
----
-
-💡 Maintained with ❤️ by automation. Privacy first, always.
-"""
-
+# ===============================
+# Main
+# ===============================
 if __name__ == "__main__":
-    main()
+    res_monster, monster_count, err_monster = generate_blocklist(SOURCES_MONSTER, COMBINED_OUTPUT)
+    res_ios, ios_count, err_ios = generate_blocklist(SOURCES_IOS_LITE, IOS_LITE_OUTPUT)
+
+    # log fetch errors separately
+    with open(FETCH_LOG, "w") as log:
+        for e in err_monster + err_ios:
+            log.write(e)
+
+    # update readme
+    generate_readme(res_monster, res_ios, monster_count, ios_count)
