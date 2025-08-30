@@ -20,9 +20,8 @@ README_FILENAME = "README.md"
 LOG_FILENAME = "fetch_errors.log"
 
 # !! IMPORTANT !!
-# !! Replace this with your GitHub username and repository name.
-# !! Example: "TheUser/the-repo"
-GITHUB_REPO_PATH = "_YOUR_REPO_HERE_/_YOUR_REPO_HERE_" 
+# !! This has been updated with your repository information.
+GITHUB_REPO_PATH = "avion121/robust-block-list-pro" # <-- FIX 1: Updated the variable with your repository path.
 
 # Network settings for fetching source files.
 REQUEST_TIMEOUT = 30  # seconds
@@ -36,12 +35,14 @@ SOURCES = {
         "https://abp.oisd.nl/",  # OISD Blocklist Full
     ],
     "Enhanced Privacy & Anti-Tracking": [
-        "https://hagezi.github.io/dns-blocklists/adblock/pro.txt",  # HaGeZi's Multi PRO
+        # <-- FIX 2: Updated HaGeZi URLs to their new location.
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt",  # HaGeZi's Multi PRO
         "https://filters.adtidy.org/windows/filters/3.txt",  # AdGuard Tracking Protection
     ],
     "Security (Malware, Phishing & Scams)": [
         "https://urlhaus.abuse.ch/downloads/hostfile/",  # URLHaus Malicious URLs
-        "https://hagezi.github.io/dns-blocklists/adblock/tif.txt", # HaGeZi's Threat Intelligence Feeds
+        # <-- FIX 2: Updated HaGeZi URLs to their new location.
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt", # HaGeZi's Threat Intelligence Feeds
     ],
     "Annoyance Removal": [
         "https://easylist.to/easylist/fanboy-annoyance.txt",  # Fanboy's Annoyances
@@ -54,7 +55,7 @@ SOURCES = {
 def fetch_url(url: str) -> tuple[str | None, str | None]:
     """Fetches a URL with retries, a custom user-agent, and returns its text content."""
     headers = {
-        "User-Agent": "ULTIMATE-GOAT-BLOCKLIST-Generator/1.0 (+https://github.com/{GITHUB_REPO_PATH})",
+        f"User-Agent": "ULTIMATE-GOAT-BLOCKLIST-Generator/1.0 (+https://github.com/{GITHUB_REPO_PATH})",
         "Accept-Encoding": "gzip, deflate"
     }
     for attempt in range(RETRY_COUNT + 1):
