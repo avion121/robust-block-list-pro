@@ -2,7 +2,7 @@
 """
 generate_list.py
 
-Generates a single merged "ULTIMATE GOAT" list containing:
+Generates a single merged "Ultimate Robust Blocklist Pro" list containing:
  - adblock/filter rules (||domain^, element-hiding rules if present)
  - hosts entries (0.0.0.0 domain)
  - plain domain lines
@@ -40,15 +40,6 @@ RETRY_BACKOFF = 2  # seconds
 # ----------------------------
 # Sources (expanded, curated)
 # ----------------------------
-# This list includes:
-# - canonical ad/block filter sources (EasyList, uAssets, AdGuard, Fanboy, etc.)
-# - hosts-style sources (StevenBlack, AdAway, MVPS, Firebog Prigent hosts)
-# - threat-intel (URLhaus, RansomwareTracker, Phishing Army)
-# - specialized lists & projects requested (Spotify/Twitch solutions, SponsorBlock, BilibiliSponsorBlock,
-#   Legitimate URL Shortener / URL-cleaning lists, Hagezi, FilterLists directory, FMHY)
-#
-# Many are stable raw.githubusercontent.com, project pages, or canonical endpoints.
-
 SOURCES: List[str] = [
     # Core ad/tracking/privacy filters (adblock-style)
     "https://easylist.to/easylist/easylist.txt",
@@ -78,7 +69,6 @@ SOURCES: List[str] = [
     # Firebog (Prigent curated hosts)
     "https://v.firebog.net/hosts/Prigent-Ads.txt",
     "https://v.firebog.net/hosts/Prigent-Malware.txt",
-    
     "https://v.firebog.net/hosts/Prigent-Crypto.txt",
     "https://v.firebog.net/hosts/AdguardDNS.txt",
     "https://v.firebog.net/hosts/Easyprivacy.txt",
@@ -95,12 +85,10 @@ SOURCES: List[str] = [
 
     # Coin-miner lists
     "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt",
-   
 
     # URLhaus / malware / phishing / ransomware
     "https://urlhaus.abuse.ch/downloads/hostfile/",
     "https://threatfox.abuse.ch/downloads/hostfile/",
-
     "https://phishing.army/download/phishing_army_blocklist_extended.txt",
     "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt",
 
@@ -122,11 +110,11 @@ SOURCES: List[str] = [
     # WindowsSpyBlocker telemetry
     "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
 
-    # HageZi (DNS blocklists collection) - fixed paths
+    # HageZi (DNS blocklists collection)
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt",
-    
 
-    "https://filters.adtidy.org/extension/chromium/filters/2.txt",  # AdGuard English filter (fixed)
+    # AdGuard English filter
+    "https://filters.adtidy.org/extension/chromium/filters/2.txt",
 
     # Misc historical / helpful lists
     "https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
@@ -134,19 +122,15 @@ SOURCES: List[str] = [
     "https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt",
 ]
 
-
 # ----------------------------
 # Helper utilities & regex
 # ----------------------------
 DOMAIN_RE = re.compile(r"(?:[a-z0-9-]{1,63}\.)+[a-z]{2,63}", re.IGNORECASE)
 
 def normalize_line(line: str) -> str:
-    # Remove BOM, trim whitespace, normalize spaces, remove trailing comments-only portions
     l = line.strip()
-    # strip common inline comment markers after content when safe
     if l and "//" in l and not l.lower().startswith(("http://", "https://")):
         l = l.split("//", 1)[0].rstrip()
-    # collapse multiple spaces
     l = re.sub(r"\s+", " ", l)
     return l
 
@@ -155,13 +139,12 @@ def is_text_content(headers: dict) -> bool:
     return "text" in ct.lower() or "html" in ct.lower() or ct == ""
 
 def fetch_url(url: str, timeout: int = REQUEST_TIMEOUT) -> Tuple[str, str | None]:
-    headers = {"User-Agent": "ultimate-goat-merged-generator/1.0 (+https://github.com/)"}
+    headers = {"User-Agent": "ultimate-robust-blocklist-pro/1.0 (+https://github.com/)"}
     last_err = None
     for attempt in range(RETRY_COUNT + 1):
         try:
             r = requests.get(url, headers=headers, timeout=timeout, allow_redirects=True)
             r.raise_for_status()
-            # Accept HTML/text responses; if binary or empty, return error
             if not is_text_content(r.headers):
                 if r.text.strip():
                     return r.text, None
@@ -179,40 +162,16 @@ def extract_lines_from_text(text: str) -> List[str]:
         l = raw.strip()
         if not l:
             continue
-        # Keep comments lines starting with common comment chars (we'll normalize them)
-        # But skip metadata headers like "Last-Modified:" or elaborate HTML titles
         if l.lower().startswith(("last-modified", "etag", "<!doctype", "<html")):
             continue
         lines.append(l)
     return lines
 
-# Domain extraction — used to optionally validate domain-like lines if needed
-def extract_domains_from_line(line: str) -> Set[str]:
-    found = set()
-    # hosts format "0.0.0.0 example.com"
-    if line.startswith(("0.0.0.0", "127.0.0.1")):
-        parts = line.split()
-        if len(parts) >= 2:
-            candidate = parts[1].lstrip(".")
-            if DOMAIN_RE.search(candidate):
-                found.add(candidate.lower())
-        return found
-    # adblock ||domain^
-    if line.startswith("||"):
-        core = line[2:].split("^",1)[0].split("/",1)[0].lstrip(".")
-        if DOMAIN_RE.search(core):
-            found.add(core.lower())
-        return found
-    # url-like
-    for m in DOMAIN_RE.findall(line):
-        found.add(m.lower())
-    return found
-
 # ----------------------------
 # Generation
 # ----------------------------
 def generate_merged(sources: List[str]) -> Tuple[Dict[str,int], int, List[str]]:
-    raw_set: Set[str] = set()  # store normalized lines for dedupe
+    raw_set: Set[str] = set()
     fetch_summary: Dict[str,int] = {}
     errors: List[str] = []
 
@@ -226,7 +185,6 @@ def generate_merged(sources: List[str]) -> Tuple[Dict[str,int], int, List[str]]:
         added_before = len(raw_set)
         lines = extract_lines_from_text(txt)
 
-        # If the source is a directory page (like filterlists.com), include a short comment line instead of raw content
         if src.rstrip("/").endswith("filterlists.com") or src.endswith("/"):
             comment_line = f"# SOURCE-DIR: {src}"
             raw_set.add(comment_line)
@@ -235,50 +193,33 @@ def generate_merged(sources: List[str]) -> Tuple[Dict[str,int], int, List[str]]:
 
         for l in lines:
             n = normalize_line(l)
-            # If the line is HTML (starts with <), ignore it except when it's README content where links may be present
             if n.startswith("<"):
-                # attempt to extract links out of HTML
                 for href in re.findall(r'href=["\']([^"\']+)["\']', n):
                     raw_set.add(f"# LINK: {href}")
                 continue
-
-            # Convert some README references into comment lines (helpful metadata)
             if n.lower().startswith(("readme", "#", "license")) or n.startswith("Project") or n.startswith("Usage"):
-                # keep as comment
                 raw_set.add("# " + n)
                 continue
-
-            # Keep valid host/adblock/domain entries and also keep other rules as-is (user requested single merged file)
-            # Filter out obvious binary garbage
             if len(n) > 0:
                 raw_set.add(n)
         fetch_summary[src] = max(0, len(raw_set) - added_before)
 
-    # Add a curated header with tool links & notes (these are the exact tools you wanted included)
     header_items = [
-        f"# ULTIMATE GOAT MERGED LIST - generated: {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}",
+        f"# Ultimate Robust Blocklist Pro - generated: {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}",
         "# This single merged file contains domains, hosts entries, adblock/filter rules, and helpful tool links.",
-        "# Tools & extensions references (not raw rules):",
-        "# SponsorBlock (skip sponsored YouTube segments) -> https://github.com/ajayyy/SponsorBlock",
-        "# SponsorBlock Server / DB -> https://github.com/ajayyy/SponsorBlockServer",
+        "# Tools & extensions references:",
+        "# SponsorBlock -> https://github.com/ajayyy/SponsorBlock",
         "# BilibiliSponsorBlock -> https://github.com/hanydd/BilibiliSponsorBlock",
-        "# BlockTheSpot / SpotX / Spotify solutions -> https://github.com/mrpond/BlockTheSpot  https://github.com/SpotX-Official/SpotX",
+        "# BlockTheSpot / SpotX (Spotify) -> https://github.com/mrpond/BlockTheSpot  https://github.com/SpotX-Official/SpotX",
         "# Twitch ad solutions -> https://github.com/pixeltris/TwitchAdSolutions",
-        "# Discord ad hiding / Disblock solutions -> community repos (see Perflyst / community)",
-        "# Legitimate URL Shortener & URL tracking cleaning lists -> see yokoffing/filterlists & Universalizer lists",
         "# HageZi DNS Blocklists -> https://github.com/hagezi/dns-blocklists",
-        "# FilterLists directory (index of filter/hosts lists) -> https://filterlists.com/",
-        "# FMHY Filterlist (unsafe sites) -> https://github.com/fmhy/FMHYFilterlist",
-        "# BehindTheOverlay / Popup removers & Paywall bypass (see bypass-paywalls-chrome repo for host rules)",
-        "# NOTE: This file intentionally mixes rules and domains per user request.",
-        "# If you need separate domain-only or rule-only outputs, create separate files from this merged dataset."
+        "# FilterLists directory -> https://filterlists.com/",
+        "# FMHY Filterlist -> https://github.com/fmhy/FMHYFilterlist",
+        "# NOTE: This file intentionally mixes rules and domains."
     ]
-    # Add header lines into raw_set so they are included but keep them at top by inserting separately during write
 
-    # Prepare sorted final list (deterministic)
     final_lines = sorted(raw_set)
 
-    # write merged file with header first
     with open(MERGED_OUTPUT, "w", encoding="utf-8") as fh:
         for h in header_items:
             fh.write(h + "\n")
@@ -291,34 +232,32 @@ def generate_merged(sources: List[str]) -> Tuple[Dict[str,int], int, List[str]]:
 def generate_readme(sources: List[str], fetch_summary: Dict[str,int], total_count: int) -> None:
     now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
     with open(README, "w", encoding="utf-8") as f:
-        f.write("# Ultimate GOAT Merged List\n\n")
+        f.write("# Ultimate Robust Blocklist Pro\n\n")
         f.write(f"**Generated:** {now}\n\n")
-        f.write("This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and comment lines with helpful tool links (SponsorBlock, BilibiliSponsorBlock, Spotify/Twitch tools, FilterLists, HageZi, FMHY, etc.).\n\n")
+        f.write("This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and comment lines with helpful tool links.\n\n")
         f.write(f"- **Total unique lines in merged file:** {total_count}\n\n")
-        f.write("## Sources included (curated)\n")
+        f.write("## Sources included\n")
         for s in sources:
             f.write(f"- {s}\n")
         f.write("\n## Per-source fetch summary (this run)\n")
         for s, c in fetch_summary.items():
             f.write(f"- {s} -> {c} lines added\n")
         f.write("\n## Notes\n")
-        f.write("- This single file intentionally mixes adblock rules and domain/host entries as you requested.\n")
-        f.write("- If you use this file for DNS-level blockers (Pi-hole, AdGuard Home) be aware that adblock rules and element-hiding lines are not meaningful in DNS contexts — they will remain as comments/rules in this single file. For best compatibility, consider generating separate domain-only and rule-only exports in addition to this merged file.\n")
-        f.write("- fetch_errors.log contains any fetch failures (404/timeout/non-text responses) for debugging.\n")
+        f.write("- This single file intentionally mixes adblock rules and domain/host entries.\n")
+        f.write("- For DNS-level blockers, rules may not apply directly.\n")
+        f.write("- fetch_errors.log contains any fetch failures.\n")
 
 def main() -> int:
-    print("Starting generation of ultimate_goat_merged.txt ...")
+    print("Starting generation of Ultimate Robust Blocklist Pro ...")
     summary, total, errors = generate_merged(SOURCES)
     print(f"Fetched {len(SOURCES)} sources, built merged list with {total} unique lines.")
 
-    # write fetch errors if any
     if errors:
         with open(FETCH_LOG, "w", encoding="utf-8") as fl:
             for e in errors:
                 fl.write(e + "\n")
         print(f"Fetch errors written to {FETCH_LOG} ({len(errors)} entries).")
     else:
-        # ensure empty log exists for CI commit
         open(FETCH_LOG, "w", encoding="utf-8").close()
         print("No fetch errors.")
 
