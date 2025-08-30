@@ -1,7 +1,7 @@
 # ULTIMATE TRUE GOAT BLOCK LIST for Brave Browser
 
-**Last Updated:** `2025-08-30 13:33:04 UTC`  
-**Total Rules:** `815326`
+**Last Updated:** `2025-08-30 18:14:55 UTC`  
+**Total Rules:** `824733`
 
 A single, powerful, and optimized blocklist designed to work perfectly with Brave Browser on both **Desktop and Mobile**. It provides comprehensive, all-around protection against ads, trackers, malware, and annoyances without breaking websites.
 
