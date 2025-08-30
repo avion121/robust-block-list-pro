@@ -115,6 +115,10 @@ SOURCES: List[str] = [
     "https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
     "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
     "https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt",
+
+    # Updated entries
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.plus.txt",
+    "https://raw.githubusercontent.com/pixeltris/TwitchAdSolutions/master/filters.txt",
 ]
 
 # ----------------------------
