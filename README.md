@@ -1,6 +1,6 @@
 # ULTIMATE TRUE GOAT BLOCK LIST
 
-**Generated:** 2025-08-30 12:22:02 UTC
+**Generated:** 2025-08-30 12:25:10 UTC
 
 This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and helpful tool links.
 
@@ -82,7 +82,8 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
-- https://raw.githubusercontent.com/DandelionSprout/adfilt/master/AntiMalwareHosts.txt
+- https://mirror1.malwaredomains.com/files/justdomains
+- https://phish.sinkhole.org/blacklist.txt
 
 ## Per-source fetch summary (this run)
 - https://easylist.to/easylist/easylist.txt -> 70182 lines added
@@ -160,7 +161,8 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts -> 0 lines added
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts -> 0 lines added
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts -> 0 lines added
-- https://raw.githubusercontent.com/DandelionSprout/adfilt/master/AntiMalwareHosts.txt -> 0 lines added
+- https://mirror1.malwaredomains.com/files/justdomains -> 0 lines added
+- https://phish.sinkhole.org/blacklist.txt -> 0 lines added
 
 ## Features
 - **Won't break websites**: Uses balanced "Pro" level lists instead of aggressive versions
