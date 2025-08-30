@@ -1,10 +1,10 @@
 # ULTIMATE TRUE GOAT BLOCK LIST
 
-**Generated:** 2025-08-30 12:10:03 UTC
+**Generated:** 2025-08-30 12:15:44 UTC
 
 This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and helpful tool links.
 
-- **Total unique lines in merged file:** 3228148
+- **Total unique lines in merged file:** 3223715
 
 ## Sources included
 - https://easylist.to/easylist/easylist.txt
@@ -24,26 +24,15 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://filters.adtidy.org/extension/chromium/filters/14.txt
 - https://filters.adtidy.org/extension/chromium/filters/16.txt
 - https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy-essentials.txt
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/click2load-filters.txt
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/url-shortener.txt
 - https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_trackers.txt
 - https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains
-- https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/privacy.txt
 - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
 - https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
 - https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt
 - https://easylist-downloads.adblockplus.org/fanboy-social.txt
 - https://easylist-downloads.adblockplus.org/fanboy-notifications.txt
 - https://secure.fanboy.co.nz/fanboy-cookiemonster.txt
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/annoyances.txt
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/bypass-login-walls.txt
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/youtube-clear.txt
-- https://easylist-downloads.adblockplus.org/easylist-cookie.txt
 - https://www.i-dont-care-about-cookies.eu/abp/
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/most-abused-tlds.txt
-- https://raw.githubusercontent.com/DandelionSprout/adfilt/master/anti-malware-list.txt
-- https://raw.githubusercontent.com/curbengh/urlhaus-filter/main/urlhaus-filter-hosts.txt
 - https://urlhaus.abuse.ch/downloads/hostfile/
 - https://threatfox.abuse.ch/downloads/hostfile/
 - https://phishing.army/download/phishing_army_blocklist_extended.txt
@@ -51,8 +40,6 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
 - https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/hosts/hosts0
 - https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt
-- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/CoinMiner.txt
-- https://easylist-downloads.adblockplus.org/easylist-mining.txt
 - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
 - https://adaway.org/hosts.txt
 - https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt
@@ -72,18 +59,7 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://easylist-downloads.adblockplus.org/easylistitaly.txt
 - https://easylist-downloads.adblockplus.org/easylistdutch.txt
 - https://easylist-downloads.adblockplus.org/easylistspanish.txt
-- https://easylist-downloads.adblockplus.org/easylistrussia.txt
-- https://easylist-downloads.adblockplus.org/easylistpolish.txt
-- https://easylist-downloads.adblockplus.org/easylistportuguese.txt
-- https://easylist-downloads.adblockplus.org/easylistindonesian.txt
-- https://easylist-downloads.adblockplus.org/easylistfrench.txt
-- https://easylist-downloads.adblockplus.org/easylistgreece.txt
-- https://easylist-downloads.adblockplus.org/easylistjapanese.txt
-- https://easylist-downloads.adblockplus.org/easylistturkish.txt
-- https://easylist-downloads.adblockplus.org/easylistvietnamese.txt
 - https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/block-third-party-fonts.txt
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/anti-paywall.txt
 - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt
 - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt
 - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt
@@ -106,13 +82,11 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
-- https://raw.githubusercontent.com/FadeMind/hosts.extras/master/hosts0/hosts
-- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/Analytics.txt
-- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/Tracking.txt
+- https://raw.githubusercontent.com/DandelionSprout/adfilt/master/AntiMalwareHosts.txt
 
 ## Per-source fetch summary (this run)
-- https://easylist.to/easylist/easylist.txt -> 70177 lines added
-- https://easylist.to/easylist/easyprivacy.txt -> 54513 lines added
+- https://easylist.to/easylist/easylist.txt -> 70179 lines added
+- https://easylist.to/easylist/easyprivacy.txt -> 54511 lines added
 - https://easylist-downloads.adblockplus.org/easylist.txt -> 39 lines added
 - https://easylist-downloads.adblockplus.org/easyprivacy.txt -> 102 lines added
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt -> 6829 lines added
@@ -127,27 +101,16 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://filters.adtidy.org/extension/chromium/filters/4.txt -> 15129 lines added
 - https://filters.adtidy.org/extension/chromium/filters/14.txt -> 51108 lines added
 - https://filters.adtidy.org/extension/chromium/filters/16.txt -> 16058 lines added
-- https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt -> 20505 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy-essentials.txt -> 0 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/click2load-filters.txt -> 0 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/url-shortener.txt -> 0 lines added
+- https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt -> 20509 lines added
 - https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_trackers.txt -> 14033 lines added
 - https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains -> 65 lines added
-- https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/privacy.txt -> 0 lines added
 - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt -> 37 lines added
 - https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt -> 2701 lines added
 - https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt -> 45004 lines added
 - https://easylist-downloads.adblockplus.org/fanboy-social.txt -> 2 lines added
 - https://easylist-downloads.adblockplus.org/fanboy-notifications.txt -> 2 lines added
-- https://secure.fanboy.co.nz/fanboy-cookiemonster.txt -> 9 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/annoyances.txt -> 0 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/bypass-login-walls.txt -> 0 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/youtube-clear.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/easylist-cookie.txt -> 0 lines added
+- https://secure.fanboy.co.nz/fanboy-cookiemonster.txt -> 4 lines added
 - https://www.i-dont-care-about-cookies.eu/abp/ -> 1 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/most-abused-tlds.txt -> 0 lines added
-- https://raw.githubusercontent.com/DandelionSprout/adfilt/master/anti-malware-list.txt -> 0 lines added
-- https://raw.githubusercontent.com/curbengh/urlhaus-filter/main/urlhaus-filter-hosts.txt -> 0 lines added
 - https://urlhaus.abuse.ch/downloads/hostfile/ -> 1 lines added
 - https://threatfox.abuse.ch/downloads/hostfile/ -> 1 lines added
 - https://phishing.army/download/phishing_army_blocklist_extended.txt -> 124999 lines added
@@ -155,8 +118,6 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt -> 8140 lines added
 - https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/hosts/hosts0 -> 154300 lines added
 - https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt -> 211 lines added
-- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/CoinMiner.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/easylist-mining.txt -> 0 lines added
 - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -> 231616 lines added
 - https://adaway.org/hosts.txt -> 6546 lines added
 - https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt -> 0 lines added
@@ -176,18 +137,7 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://easylist-downloads.adblockplus.org/easylistitaly.txt -> 3990 lines added
 - https://easylist-downloads.adblockplus.org/easylistdutch.txt -> 1515 lines added
 - https://easylist-downloads.adblockplus.org/easylistspanish.txt -> 2555 lines added
-- https://easylist-downloads.adblockplus.org/easylistrussia.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/easylistpolish.txt -> 2822 lines added
-- https://easylist-downloads.adblockplus.org/easylistportuguese.txt -> 1609 lines added
-- https://easylist-downloads.adblockplus.org/easylistindonesian.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/easylistfrench.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/easylistgreece.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/easylistjapanese.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/easylistturkish.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/easylistvietnamese.txt -> 0 lines added
-- https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt -> 24105 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/block-third-party-fonts.txt -> 0 lines added
-- https://raw.githubusercontent.com/yokoffing/filterlists/main/anti-paywall.txt -> 0 lines added
+- https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt -> 24104 lines added
 - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt -> 207 lines added
 - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt -> 76 lines added
 - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt -> 55 lines added
@@ -210,9 +160,7 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts -> 0 lines added
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts -> 0 lines added
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts -> 0 lines added
-- https://raw.githubusercontent.com/FadeMind/hosts.extras/master/hosts0/hosts -> 0 lines added
-- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/Analytics.txt -> 0 lines added
-- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/Tracking.txt -> 0 lines added
+- https://raw.githubusercontent.com/DandelionSprout/adfilt/master/AntiMalwareHosts.txt -> 0 lines added
 
 ## Features
 - **Won't break websites**: Uses balanced "Pro" level lists instead of aggressive versions
@@ -220,7 +168,7 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - **All-rounder coverage**: Covers ads, trackers, malware, annoyances, privacy, and security
 - **No 404s or wrong URLs**: All lists are from actively maintained GitHub repositories
 - **Nothing missing**: Comprehensive coverage of all threat categories
-- **Regional coverage**: Includes 15+ country/language-specific lists
+- **Regional coverage**: Includes country/language-specific lists
 - **Emerging threats**: Covers cryptojacking, fingerprinting, and new tracking techniques
 
 ## Categories
@@ -229,11 +177,11 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - Comprehensive coverage of advertisements across the web
 
 ### Privacy & Tracking
-- Privacy-focused lists (yokoffing, CNAME trackers)
+- Privacy-focused lists (CNAME trackers)
 - Blocks tracking scripts, cookies, and fingerprinting attempts
 
 ### Annoyances
-- Cookie notices, pop-ups, login walls, and other UI annoyances
+- Cookie notices, pop-ups, and other UI annoyances
 - Social media widgets and newsletter prompts
 
 ### Security & Malware
@@ -245,12 +193,11 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - Comprehensive DNS-level blocking
 
 ### Regional
-- 15+ country/language-specific lists
+- Country/language-specific lists
 - Localized ad and tracking protection
 
 ### Specialized
-- Third-party fonts, paywall bypass, smart TV, mobile
-- Windows telemetry blocking
+- Smart TV, mobile, Windows telemetry blocking
 
 ### Emerging Threats
 - Anti-fingerprinting, analytics, session replay blocking
