@@ -1,10 +1,10 @@
 # ULTIMATE TRUE GOAT BLOCK LIST
 
-**Generated:** 2025-08-30 12:25:10 UTC
+**Generated:** 2025-08-30 12:33:52 UTC
 
 This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and helpful tool links.
 
-- **Total unique lines in merged file:** 3223715
+- **Total unique lines in merged file:** 3226023
 
 ## Sources included
 - https://easylist.to/easylist/easylist.txt
@@ -40,6 +40,8 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
 - https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/hosts/hosts0
 - https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt
+- https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
+- https://raw.githubusercontent.com/matomo-org/referrer-spam-blacklist/master/spammers.txt
 - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
 - https://adaway.org/hosts.txt
 - https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt
@@ -82,11 +84,9 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
-- https://mirror1.malwaredomains.com/files/justdomains
-- https://phish.sinkhole.org/blacklist.txt
 
 ## Per-source fetch summary (this run)
-- https://easylist.to/easylist/easylist.txt -> 70182 lines added
+- https://easylist.to/easylist/easylist.txt -> 70184 lines added
 - https://easylist.to/easylist/easyprivacy.txt -> 54511 lines added
 - https://easylist-downloads.adblockplus.org/easylist.txt -> 39 lines added
 - https://easylist-downloads.adblockplus.org/easyprivacy.txt -> 102 lines added
@@ -119,19 +119,21 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt -> 8140 lines added
 - https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/hosts/hosts0 -> 154300 lines added
 - https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt -> 211 lines added
-- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -> 231616 lines added
+- https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts -> 991 lines added
+- https://raw.githubusercontent.com/matomo-org/referrer-spam-blacklist/master/spammers.txt -> 2309 lines added
+- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -> 230629 lines added
 - https://adaway.org/hosts.txt -> 6546 lines added
 - https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt -> 0 lines added
-- http://winhelp2002.mvps.org/hosts.txt -> 83 lines added
+- http://winhelp2002.mvps.org/hosts.txt -> 82 lines added
 - https://someonewhocares.org/hosts/hosts -> 11454 lines added
-- https://v.firebog.net/hosts/Prigent-Ads.txt -> 2372 lines added
+- https://v.firebog.net/hosts/Prigent-Ads.txt -> 2371 lines added
 - https://v.firebog.net/hosts/Prigent-Malware.txt -> 127523 lines added
 - https://v.firebog.net/hosts/Prigent-Crypto.txt -> 16238 lines added
-- https://v.firebog.net/hosts/AdguardDNS.txt -> 130937 lines added
+- https://v.firebog.net/hosts/AdguardDNS.txt -> 130933 lines added
 - https://v.firebog.net/hosts/Easyprivacy.txt -> 13865 lines added
 - https://v.firebog.net/hosts/Admiral.txt -> 94 lines added
 - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.mini.txt -> 68318 lines added
-- https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt -> 377768 lines added
+- https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt -> 377767 lines added
 - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.plus.txt -> 161460 lines added
 - https://easylist-downloads.adblockplus.org/easylistgermany.txt -> 5726 lines added
 - https://easylist-downloads.adblockplus.org/easylistchina.txt -> 13412 lines added
@@ -161,8 +163,6 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts -> 0 lines added
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts -> 0 lines added
 - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts -> 0 lines added
-- https://mirror1.malwaredomains.com/files/justdomains -> 0 lines added
-- https://phish.sinkhole.org/blacklist.txt -> 0 lines added
 
 ## Features
 - **Won't break websites**: Uses balanced "Pro" level lists instead of aggressive versions
@@ -189,6 +189,7 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 ### Security & Malware
 - Malware domains, phishing sites, and ransomware protection
 - Cryptojacking and coin mining prevention
+- Additional protection from Badd-Boyz-Hosts and referrer spam blacklists
 
 ### DNS-level/Hosts
 - Hosts file lists (StevenBlack, Firebog, Hagezi)
