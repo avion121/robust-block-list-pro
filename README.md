@@ -1,12 +1,12 @@
-# Ultimate GOAT Merged List
+# Ultimate Robust Blocklist Pro
 
-**Generated:** 2025-08-30 06:16:23 UTC
+**Generated:** 2025-08-30 07:20:48 UTC
 
-This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and comment lines with helpful tool links (SponsorBlock, BilibiliSponsorBlock, Spotify/Twitch tools, FilterLists, HageZi, FMHY, etc.).
+This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and comment lines with helpful tool links.
 
-- **Total unique lines in merged file:** 2400597
+- **Total unique lines in merged file:** 2242279
 
-## Sources included (curated)
+## Sources included
 - https://easylist.to/easylist/easylist.txt
 - https://easylist.to/easylist/easyprivacy.txt
 - https://easylist-downloads.adblockplus.org/easylist.txt
@@ -55,15 +55,14 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://www.github.developerdan.com/hosts/lists/tracking-aggressive-extended.txt
 - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
 - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt
-- https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.plus.txt
 - https://filters.adtidy.org/extension/chromium/filters/2.txt
 - https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt
 - https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
 - https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt
 
 ## Per-source fetch summary (this run)
-- https://easylist.to/easylist/easylist.txt -> 70115 lines added
-- https://easylist.to/easylist/easyprivacy.txt -> 54510 lines added
+- https://easylist.to/easylist/easylist.txt -> 70123 lines added
+- https://easylist.to/easylist/easyprivacy.txt -> 54513 lines added
 - https://easylist-downloads.adblockplus.org/easylist.txt -> 39 lines added
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt -> 6830 lines added
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt -> 4592 lines added
@@ -110,13 +109,12 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://www.github.developerdan.com/hosts/lists/tracking-aggressive-extended.txt -> 169015 lines added
 - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt -> 259 lines added
 - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt -> 352855 lines added
-- https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.plus.txt -> 158338 lines added
 - https://filters.adtidy.org/extension/chromium/filters/2.txt -> 42532 lines added
 - https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt -> 45 lines added
-- https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt -> 1050 lines added
+- https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt -> 1059 lines added
 - https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt -> 816 lines added
 
 ## Notes
-- This single file intentionally mixes adblock rules and domain/host entries as you requested.
-- If you use this file for DNS-level blockers (Pi-hole, AdGuard Home) be aware that adblock rules and element-hiding lines are not meaningful in DNS contexts — they will remain as comments/rules in this single file. For best compatibility, consider generating separate domain-only and rule-only exports in addition to this merged file.
-- fetch_errors.log contains any fetch failures (404/timeout/non-text responses) for debugging.
+- This single file intentionally mixes adblock rules and domain/host entries.
+- For DNS-level blockers, rules may not apply directly.
+- fetch_errors.log contains any fetch failures.
