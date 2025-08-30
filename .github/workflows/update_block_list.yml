@@ -1,30 +1,24 @@
-name: Robust Blocklist Pro
-
+name: ULTIMATE TRUE GOAT BLOCK LIST
 on:
   schedule:
     - cron: "0 */6 * * *"  # every 6 hours
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests
-
       - name: Run generator
         run: python generate_list.py
-
       - name: Commit and push changes
         env:
           GIT_AUTHOR_NAME: "github-actions[bot]"
@@ -35,5 +29,5 @@ jobs:
           git config --global user.name "${GIT_AUTHOR_NAME}"
           git config --global user.email "${GIT_AUTHOR_EMAIL}"
           git add ultimate_goat_merged.txt README.md fetch_errors.log || true
-          git commit -m "Update Ultimate Robust Blocklist Pro - $(date -u '+%Y-%m-%d %H:%M:%S UTC')" || echo "No changes to commit"
+          git commit -m "Update ULTIMATE TRUE GOAT BLOCK LIST - $(date -u '+%Y-%m-%d %H:%M:%S UTC')" || echo "No changes to commit"
           git push || (echo "git push failed" && exit 0)
