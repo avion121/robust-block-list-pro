@@ -6,17 +6,12 @@ Generates a single merged "Ultimate Robust Blocklist Pro" list containing:
  - adblock/filter rules (||domain^, element-hiding rules if present)
  - hosts entries (0.0.0.0 domain)
  - plain domain lines
- - comment lines with helpful tool/service links (SponsorBlock, FilterLists, Hagezi, FMHY, BlockTheSpot, Twitch solutions...)
+ - comment lines with helpful tool/service links
 
 Outputs:
  - ultimate_goat_merged.txt   <- single merged file with everything (deduped)
  - README.md
  - fetch_errors.log
-
-Notes:
- - Deduplication is done on raw normalized lines (strip whitespace).
- - Script is conservative: retries transient errors; logs fetch errors.
- - The merged file mixes rules and domains as requested (single file).
 """
 
 from __future__ import annotations
@@ -123,7 +118,7 @@ SOURCES: List[str] = [
 ]
 
 # ----------------------------
-# Helper utilities & regex
+# Helper utilities
 # ----------------------------
 DOMAIN_RE = re.compile(r"(?:[a-z0-9-]{1,63}\.)+[a-z]{2,63}", re.IGNORECASE)
 
@@ -204,23 +199,27 @@ def generate_merged(sources: List[str]) -> Tuple[Dict[str,int], int, List[str]]:
                 raw_set.add(n)
         fetch_summary[src] = max(0, len(raw_set) - added_before)
 
+    # Metadata header for Brave/uBO/AdGuard recognition
+    metadata_items = [
+        "! Title: Ultimate Robust Blocklist Pro",
+        "! Description: A single merged list of domains, hosts, and adblock rules from 59 curated sources.",
+        "! Homepage: https://github.com/<your-repo>",
+        "! License: MIT",
+    ]
+
+    # Custom header notes
     header_items = [
         f"# Ultimate Robust Blocklist Pro - generated: {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}",
         "# This single merged file contains domains, hosts entries, adblock/filter rules, and helpful tool links.",
-        "# Tools & extensions references:",
-        "# SponsorBlock -> https://github.com/ajayyy/SponsorBlock",
-        "# BilibiliSponsorBlock -> https://github.com/hanydd/BilibiliSponsorBlock",
-        "# BlockTheSpot / SpotX (Spotify) -> https://github.com/mrpond/BlockTheSpot  https://github.com/SpotX-Official/SpotX",
-        "# Twitch ad solutions -> https://github.com/pixeltris/TwitchAdSolutions",
-        "# HageZi DNS Blocklists -> https://github.com/hagezi/dns-blocklists",
-        "# FilterLists directory -> https://filterlists.com/",
-        "# FMHY Filterlist -> https://github.com/fmhy/FMHYFilterlist",
         "# NOTE: This file intentionally mixes rules and domains."
     ]
 
     final_lines = sorted(raw_set)
 
     with open(MERGED_OUTPUT, "w", encoding="utf-8") as fh:
+        for m in metadata_items:
+            fh.write(m + "\n")
+        fh.write("\n")
         for h in header_items:
             fh.write(h + "\n")
         fh.write("\n")
@@ -234,7 +233,7 @@ def generate_readme(sources: List[str], fetch_summary: Dict[str,int], total_coun
     with open(README, "w", encoding="utf-8") as f:
         f.write("# Ultimate Robust Blocklist Pro\n\n")
         f.write(f"**Generated:** {now}\n\n")
-        f.write("This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and comment lines with helpful tool links.\n\n")
+        f.write("This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and helpful tool links.\n\n")
         f.write(f"- **Total unique lines in merged file:** {total_count}\n\n")
         f.write("## Sources included\n")
         for s in sources:
