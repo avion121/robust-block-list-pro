@@ -17,6 +17,8 @@ import datetime
 import re
 import time
 import sys
+import gzip
+import io
 from typing import Tuple, List, Set, Dict
 
 # Output names
@@ -59,12 +61,8 @@ SOURCES: List[str] = [
     
     # ===== PRIVACY & TRACKING =====
     # Privacy-focused lists
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy-essentials.txt",
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/click2load-filters.txt",
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/url-shortener.txt",
     "https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_trackers.txt",
     "https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains",
-    "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/SpywareFilter/sections/privacy.txt",
     
     # Disconnect.me tracking lists
     "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt",
@@ -76,19 +74,12 @@ SOURCES: List[str] = [
     "https://easylist-downloads.adblockplus.org/fanboy-social.txt",
     "https://easylist-downloads.adblockplus.org/fanboy-notifications.txt",
     "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/annoyances.txt",
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/bypass-login-walls.txt",
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/youtube-clear.txt",
     
     # Cookie notices and GDPR popups
-    "https://easylist-downloads.adblockplus.org/easylist-cookie.txt",
     "https://www.i-dont-care-about-cookies.eu/abp/",
     
     # ===== SECURITY & MALWARE =====
     # Malware and phishing protection
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/most-abused-tlds.txt",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/anti-malware-list.txt",
-    "https://raw.githubusercontent.com/curbengh/urlhaus-filter/main/urlhaus-filter-hosts.txt",
     "https://urlhaus.abuse.ch/downloads/hostfile/",
     "https://threatfox.abuse.ch/downloads/hostfile/",
     "https://phishing.army/download/phishing_army_blocklist_extended.txt",
@@ -98,8 +89,6 @@ SOURCES: List[str] = [
     
     # Cryptojacking and coin mining
     "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt",
-    "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/CoinMiner.txt",
-    "https://easylist-downloads.adblockplus.org/easylist-mining.txt",
     
     # ===== DNS-LEVEL/HOSTS =====
     # Hosts file lists
@@ -129,21 +118,10 @@ SOURCES: List[str] = [
     "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
     "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
     "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
-    "https://easylist-downloads.adblockplus.org/easylistrussia.txt",
-    "https://easylist-downloads.adblockplus.org/easylistpolish.txt",
-    "https://easylist-downloads.adblockplus.org/easylistportuguese.txt",
-    "https://easylist-downloads.adblockplus.org/easylistindonesian.txt",
-    "https://easylist-downloads.adblockplus.org/easylistfrench.txt",
-    "https://easylist-downloads.adblockplus.org/easylistgreece.txt",
-    "https://easylist-downloads.adblockplus.org/easylistjapanese.txt",
-    "https://easylist-downloads.adblockplus.org/easylistturkish.txt",
-    "https://easylist-downloads.adblockplus.org/easylistvietnamese.txt",
     "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt",
     
     # ===== SPECIALIZED =====
     # Specialized lists
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/block-third-party-fonts.txt",
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/anti-paywall.txt",
     "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt",
     "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt",
     "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt",
@@ -177,11 +155,9 @@ SOURCES: List[str] = [
     "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts",
     "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts",
     "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts",
-    "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/hosts0/hosts",
     
-    # Anti-fingerprinting
-    "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/Analytics.txt",
-    "https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/Tracking.txt",
+    # Dandelion Sprout's Anti-Malware List (corrected URL)
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/AntiMalwareHosts.txt",
 ]
 
 # ----------------------------
@@ -200,18 +176,39 @@ def is_text_content(headers: dict) -> bool:
     ct = headers.get("Content-Type", "")
     return "text" in ct.lower() or "html" in ct.lower() or ct == ""
 
+def decompress_content(content: bytes, headers: dict) -> str:
+    content_encoding = headers.get("Content-Encoding", "").lower()
+    if content_encoding == "gzip":
+        try:
+            return gzip.decompress(content).decode("utf-8", errors="replace")
+        except:
+            # If decompression fails, try to decode as-is
+            return content.decode("utf-8", errors="replace")
+    else:
+        return content.decode("utf-8", errors="replace")
+
 def fetch_url(url: str, timeout: int = REQUEST_TIMEOUT) -> Tuple[str, str | None]:
-    headers = {"User-Agent": "ultimate-true-goat-blocklist/1.0 (+https://github.com/)"}
+    headers = {
+        "User-Agent": "ultimate-true-goat-blocklist/1.0 (+https://github.com/)",
+        "Accept-Encoding": "gzip, deflate"
+    }
     last_err = None
     for attempt in range(RETRY_COUNT + 1):
         try:
             r = requests.get(url, headers=headers, timeout=timeout, allow_redirects=True)
             r.raise_for_status()
+            
+            # Handle content encoding
+            if isinstance(r.content, bytes):
+                content = decompress_content(r.content, r.headers)
+            else:
+                content = r.text
+                
             if not is_text_content(r.headers):
-                if r.text.strip():
-                    return r.text, None
+                if content.strip():
+                    return content, None
                 return "", f"{url} returned non-text Content-Type: {r.headers.get('Content-Type','')}"
-            return r.text, None
+            return content, None
         except Exception as e:
             last_err = f"{url} failed attempt {attempt+1}: {e}"
             if attempt < RETRY_COUNT:
@@ -296,15 +293,15 @@ def generate_merged(sources: List[str]) -> Tuple[Dict[str,int], int, List[str]]:
         "#",
         "# CATEGORIES:",
         "# - Core Ad-blocking (EasyList, uBlock Origin, AdGuard)",
-        "# - Privacy & Tracking (EasyPrivacy, yokoffing, CNAME trackers)",
+        "# - Privacy & Tracking (EasyPrivacy, CNAME trackers)",
         "# - Annoyances (cookie notices, pop-ups, login walls)",
         "# - Security & Malware (phishing, malware, ransomware)",
         "# - DNS-level/Hosts (StevenBlack, Firebog, Hagezi)",
-        "# - Regional (15+ country/language-specific lists)",
-        "# - Specialized (fonts, paywalls, smart TV, mobile)",
+        "# - Regional (country/language-specific lists)",
+        "# - Specialized (smart TV, mobile, Windows telemetry)",
         "# - Emerging Threats (fingerprinting, analytics, session replay)",
         "#",
-        "# SOURCES: EasyList, EasyPrivacy, uBlock Origin, AdGuard, yokoffing, hagezi,",
+        "# SOURCES: EasyList, EasyPrivacy, uBlock Origin, AdGuard, hagezi,",
         "# Dandelion Sprout, Firebog, StevenBlack, Disconnect.me, URLhaus, Phishing Army,",
         "# BlocklistProject, DeveloperDan, and many more...",
     ]
@@ -342,17 +339,17 @@ def generate_readme(sources: List[str], fetch_summary: Dict[str,int], total_coun
         f.write("- **All-rounder coverage**: Covers ads, trackers, malware, annoyances, privacy, and security\n")
         f.write("- **No 404s or wrong URLs**: All lists are from actively maintained GitHub repositories\n")
         f.write("- **Nothing missing**: Comprehensive coverage of all threat categories\n")
-        f.write("- **Regional coverage**: Includes 15+ country/language-specific lists\n")
+        f.write("- **Regional coverage**: Includes country/language-specific lists\n")
         f.write("- **Emerging threats**: Covers cryptojacking, fingerprinting, and new tracking techniques\n")
         f.write("\n## Categories\n")
         f.write("### Core Ad-blocking\n")
         f.write("- Primary ad-blocking lists (EasyList, uBlock Origin, AdGuard)\n")
         f.write("- Comprehensive coverage of advertisements across the web\n\n")
         f.write("### Privacy & Tracking\n")
-        f.write("- Privacy-focused lists (yokoffing, CNAME trackers)\n")
+        f.write("- Privacy-focused lists (CNAME trackers)\n")
         f.write("- Blocks tracking scripts, cookies, and fingerprinting attempts\n\n")
         f.write("### Annoyances\n")
-        f.write("- Cookie notices, pop-ups, login walls, and other UI annoyances\n")
+        f.write("- Cookie notices, pop-ups, and other UI annoyances\n")
         f.write("- Social media widgets and newsletter prompts\n\n")
         f.write("### Security & Malware\n")
         f.write("- Malware domains, phishing sites, and ransomware protection\n")
@@ -361,11 +358,10 @@ def generate_readme(sources: List[str], fetch_summary: Dict[str,int], total_coun
         f.write("- Hosts file lists (StevenBlack, Firebog, Hagezi)\n")
         f.write("- Comprehensive DNS-level blocking\n\n")
         f.write("### Regional\n")
-        f.write("- 15+ country/language-specific lists\n")
+        f.write("- Country/language-specific lists\n")
         f.write("- Localized ad and tracking protection\n\n")
         f.write("### Specialized\n")
-        f.write("- Third-party fonts, paywall bypass, smart TV, mobile\n")
-        f.write("- Windows telemetry blocking\n\n")
+        f.write("- Smart TV, mobile, Windows telemetry blocking\n\n")
         f.write("### Emerging Threats\n")
         f.write("- Anti-fingerprinting, analytics, session replay blocking\n")
         f.write("- Protection against new and evolving tracking techniques\n\n")
