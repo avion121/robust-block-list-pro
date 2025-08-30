@@ -1,0 +1,166 @@
+# Ultimate GOAT Merged List
+
+**Generated:** 2025-08-30 04:05:12 UTC
+
+This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and comment lines with helpful tool links (SponsorBlock, BilibiliSponsorBlock, Spotify/Twitch tools, FilterLists, HageZi, FMHY, etc.).
+
+- **Total unique lines in merged file:** 1847103
+
+## Sources included (curated)
+- https://easylist.to/easylist/easylist.txt
+- https://easylist.to/easylist/easyprivacy.txt
+- https://easylist-downloads.adblockplus.org/easylist.txt
+- https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt
+- https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt
+- https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt
+- https://filters.adtidy.org/extension/chromium/filters/1.txt
+- https://filters.adtidy.org/extension/chromium/filters/14.txt
+- https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
+- https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_trackers.txt
+- https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt
+- https://easylist-downloads.adblockplus.org/fanboy-social.txt
+- https://easylist-downloads.adblockplus.org/fanboy-notifications.txt
+- https://secure.fanboy.co.nz/fanboy-cookiemonster.txt
+- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+- https://adaway.org/hosts.txt
+- https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt
+- http://winhelp2002.mvps.org/hosts.txt
+- https://someonewhocares.org/hosts/hosts
+- https://v.firebog.net/hosts/Prigent-Ads.txt
+- https://v.firebog.net/hosts/Prigent-Malware.txt
+- https://v.firebog.net/hosts/Prigent-Phishing.txt
+- https://v.firebog.net/hosts/Prigent-Crypto.txt
+- https://v.firebog.net/hosts/AdguardDNS.txt
+- https://v.firebog.net/hosts/Easyprivacy.txt
+- https://v.firebog.net/hosts/Admiral.txt
+- https://big.oisd.nl/
+- https://small.oisd.nl/
+- https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
+- https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/hosts/hosts0
+- https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareAdGuardHome.txt
+- https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+- https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+- https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
+- https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt
+- https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/list.txt
+- https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/hosts
+- https://urlhaus.abuse.ch/downloads/hostfile/
+- https://ransomwaretracker.abuse.ch/downloads/RW_DOMBL.txt
+- https://ransomwaretracker.abuse.ch/downloads/CW_C2_DOMBL.txt
+- https://phishing.army/download/phishing_army_blocklist_extended.txt
+- https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt
+- https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains
+- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt
+- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt
+- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt
+- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SessionReplay.txt
+- https://blocklistproject.github.io/Lists/ads.txt
+- https://blocklistproject.github.io/Lists/tracking.txt
+- https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt
+- https://www.github.developerdan.com/hosts/lists/tracking-aggressive-extended.txt
+- https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
+- https://raw.githubusercontent.com/hagezi/dns-blocklists/master/hosts/hagezi-hosts.txt
+- https://raw.githubusercontent.com/hagezi/dns-blocklists/master/hosts/hagezi-pro.txt
+- https://raw.githubusercontent.com/fmhy/FMHYFilterlist/master/FMHy%20Filterlist%20Basic.txt
+- https://raw.githubusercontent.com/fmhy/FMHYFilterlist/master/FMHy%20Filterlist%20Plus.txt
+- https://raw.githubusercontent.com/yokoffing/filterlists/main/lists/Actually%20Legit%20URL%20Shortener.txt
+- https://raw.githubusercontent.com/Universalizer/Universal-FilterLists/main/Actually%20Legitimate%20URL%20Shortener.txt
+- https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/English/filter.txt
+- https://raw.githubusercontent.com/ajayyy/SponsorBlockServer/master/README.md
+- https://raw.githubusercontent.com/ajayyy/SponsorBlock/master/README.md
+- https://raw.githubusercontent.com/hanydd/BilibiliSponsorBlock/master/README.md
+- https://raw.githubusercontent.com/mrpond/BlockTheSpot/master/README.md
+- https://raw.githubusercontent.com/pixeltris/TwitchAdSolutions/master/README.md
+- https://raw.githubusercontent.com/SpotX-Official/SpotX/master/README.md
+- https://raw.githubusercontent.com/NotPaul/Twitch-Ad-Blocker/master/twitch-ad-blocker.txt
+- https://raw.githubusercontent.com/ZeroDot1/Discord-Block-List/master/README.md
+- https://raw.githubusercontent.com/Perflyst/Perflyst-PiHole/master/Discord.txt
+- https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/README.md
+- https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/hostnames.txt
+- https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/lists/filters.txt
+- https://filterlists.com/
+- https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt
+- https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
+- https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt
+
+## Per-source fetch summary (this run)
+- https://easylist.to/easylist/easylist.txt -> 70088 lines added
+- https://easylist.to/easylist/easyprivacy.txt -> 54505 lines added
+- https://easylist-downloads.adblockplus.org/easylist.txt -> 39 lines added
+- https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt -> 6830 lines added
+- https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt -> 4592 lines added
+- https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt -> 5 lines added
+- https://filters.adtidy.org/extension/chromium/filters/1.txt -> 17123 lines added
+- https://filters.adtidy.org/extension/chromium/filters/14.txt -> 51875 lines added
+- https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt -> 69117 lines added
+- https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_trackers.txt -> 14198 lines added
+- https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt -> 45584 lines added
+- https://easylist-downloads.adblockplus.org/fanboy-social.txt -> 2 lines added
+- https://easylist-downloads.adblockplus.org/fanboy-notifications.txt -> 2 lines added
+- https://secure.fanboy.co.nz/fanboy-cookiemonster.txt -> 10 lines added
+- https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -> 236820 lines added
+- https://adaway.org/hosts.txt -> 6546 lines added
+- https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt -> 0 lines added
+- http://winhelp2002.mvps.org/hosts.txt -> 83 lines added
+- https://someonewhocares.org/hosts/hosts -> 11454 lines added
+- https://v.firebog.net/hosts/Prigent-Ads.txt -> 4273 lines added
+- https://v.firebog.net/hosts/Prigent-Malware.txt -> 225902 lines added
+- https://v.firebog.net/hosts/Prigent-Phishing.txt -> 0 lines added
+- https://v.firebog.net/hosts/Prigent-Crypto.txt -> 16238 lines added
+- https://v.firebog.net/hosts/AdguardDNS.txt -> 131096 lines added
+- https://v.firebog.net/hosts/Easyprivacy.txt -> 13870 lines added
+- https://v.firebog.net/hosts/Admiral.txt -> 94 lines added
+- https://big.oisd.nl/ -> 1 lines added
+- https://small.oisd.nl/ -> 1 lines added
+- https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt -> 8123 lines added
+- https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/hosts/hosts0 -> 149504 lines added
+- https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareAdGuardHome.txt -> 31183 lines added
+- https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt -> 689 lines added
+- https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt -> 17 lines added
+- https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt -> 2 lines added
+- https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt -> 244 lines added
+- https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/list.txt -> 0 lines added
+- https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/hosts -> 0 lines added
+- https://urlhaus.abuse.ch/downloads/hostfile/ -> 1 lines added
+- https://ransomwaretracker.abuse.ch/downloads/RW_DOMBL.txt -> 0 lines added
+- https://ransomwaretracker.abuse.ch/downloads/CW_C2_DOMBL.txt -> 0 lines added
+- https://phishing.army/download/phishing_army_blocklist_extended.txt -> 26523 lines added
+- https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt -> 1763 lines added
+- https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains -> 45 lines added
+- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV-AGH.txt -> 241 lines added
+- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt -> 76 lines added
+- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt -> 55 lines added
+- https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SessionReplay.txt -> 8 lines added
+- https://blocklistproject.github.io/Lists/ads.txt -> 120731 lines added
+- https://blocklistproject.github.io/Lists/tracking.txt -> 13131 lines added
+- https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt -> 342896 lines added
+- https://www.github.developerdan.com/hosts/lists/tracking-aggressive-extended.txt -> 169015 lines added
+- https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt -> 259 lines added
+- https://raw.githubusercontent.com/hagezi/dns-blocklists/master/hosts/hagezi-hosts.txt -> 0 lines added
+- https://raw.githubusercontent.com/hagezi/dns-blocklists/master/hosts/hagezi-pro.txt -> 0 lines added
+- https://raw.githubusercontent.com/fmhy/FMHYFilterlist/master/FMHy%20Filterlist%20Basic.txt -> 0 lines added
+- https://raw.githubusercontent.com/fmhy/FMHYFilterlist/master/FMHy%20Filterlist%20Plus.txt -> 0 lines added
+- https://raw.githubusercontent.com/yokoffing/filterlists/main/lists/Actually%20Legit%20URL%20Shortener.txt -> 0 lines added
+- https://raw.githubusercontent.com/Universalizer/Universal-FilterLists/main/Actually%20Legitimate%20URL%20Shortener.txt -> 0 lines added
+- https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/English/filter.txt -> 0 lines added
+- https://raw.githubusercontent.com/ajayyy/SponsorBlockServer/master/README.md -> 0 lines added
+- https://raw.githubusercontent.com/ajayyy/SponsorBlock/master/README.md -> 20 lines added
+- https://raw.githubusercontent.com/hanydd/BilibiliSponsorBlock/master/README.md -> 42 lines added
+- https://raw.githubusercontent.com/mrpond/BlockTheSpot/master/README.md -> 52 lines added
+- https://raw.githubusercontent.com/pixeltris/TwitchAdSolutions/master/README.md -> 30 lines added
+- https://raw.githubusercontent.com/SpotX-Official/SpotX/master/README.md -> 42 lines added
+- https://raw.githubusercontent.com/NotPaul/Twitch-Ad-Blocker/master/twitch-ad-blocker.txt -> 0 lines added
+- https://raw.githubusercontent.com/ZeroDot1/Discord-Block-List/master/README.md -> 0 lines added
+- https://raw.githubusercontent.com/Perflyst/Perflyst-PiHole/master/Discord.txt -> 0 lines added
+- https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/README.md -> 0 lines added
+- https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/hostnames.txt -> 0 lines added
+- https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/lists/filters.txt -> 0 lines added
+- https://filterlists.com/ -> 0 lines added
+- https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt -> 59 lines added
+- https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt -> 1180 lines added
+- https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt -> 824 lines added
+
+## Notes
+- This single file intentionally mixes adblock rules and domain/host entries as you requested.
+- If you use this file for DNS-level blockers (Pi-hole, AdGuard Home) be aware that adblock rules and element-hiding lines are not meaningful in DNS contexts — they will remain as comments/rules in this single file. For best compatibility, consider generating separate domain-only and rule-only exports in addition to this merged file.
+- fetch_errors.log contains any fetch failures (404/timeout/non-text responses) for debugging.
