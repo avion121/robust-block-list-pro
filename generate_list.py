@@ -90,6 +90,10 @@ SOURCES: List[str] = [
     # Cryptojacking and coin mining
     "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt",
     
+    # Additional malware protection (replacements for failing URLs)
+    "https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts",
+    "https://raw.githubusercontent.com/matomo-org/referrer-spam-blacklist/master/spammers.txt",
+    
     # ===== DNS-LEVEL/HOSTS =====
     # Hosts file lists
     "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
@@ -155,10 +159,6 @@ SOURCES: List[str] = [
     "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts",
     "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts",
     "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts",
-    
-    # Additional malware protection (replacing Dandelion Sprout)
-    "https://mirror1.malwaredomains.com/files/justdomains",
-    "https://phish.sinkhole.org/blacklist.txt",
 ]
 
 # ----------------------------
@@ -304,7 +304,7 @@ def generate_merged(sources: List[str]) -> Tuple[Dict[str,int], int, List[str]]:
         "#",
         "# SOURCES: EasyList, EasyPrivacy, uBlock Origin, AdGuard, hagezi,",
         "# Firebog, StevenBlack, Disconnect.me, URLhaus, Phishing Army,",
-        "# BlocklistProject, DeveloperDan, and many more...",
+        "# BlocklistProject, DeveloperDan, mitchellkrogza, and many more...",
     ]
     
     final_lines = sorted(raw_set)
@@ -354,7 +354,8 @@ def generate_readme(sources: List[str], fetch_summary: Dict[str,int], total_coun
         f.write("- Social media widgets and newsletter prompts\n\n")
         f.write("### Security & Malware\n")
         f.write("- Malware domains, phishing sites, and ransomware protection\n")
-        f.write("- Cryptojacking and coin mining prevention\n\n")
+        f.write("- Cryptojacking and coin mining prevention\n")
+        f.write("- Additional protection from Badd-Boyz-Hosts and referrer spam blacklists\n\n")
         f.write("### DNS-level/Hosts\n")
         f.write("- Hosts file lists (StevenBlack, Firebog, Hagezi)\n")
         f.write("- Comprehensive DNS-level blocking\n\n")
