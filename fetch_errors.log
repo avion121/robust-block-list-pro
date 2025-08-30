@@ -1,4 +1,0 @@
-[2025-08-30T04:22:39.853843] https://v.firebog.net/hosts/Prigent-Phishing failed attempt 3: 404 Client Error: Not Found for url: https://v.firebog.net/hosts/Prigent-Phishing
-[2025-08-30T04:22:50.478450] https://threatfox.abuse.ch/export/hostfile/ failed attempt 3: 404 Client Error: Not Found for url: https://threatfox.abuse.ch/export/hostfile/
-[2025-08-30T04:23:02.383554] https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro-plus.txt failed attempt 3: 404 Client Error: Not Found for url: https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro-plus.txt
-[2025-08-30T04:23:09.655547] https://raw.githubusercontent.com/NotPaul/Twitch-Ad-Blocker/master/twitch-ad-blocker.txt failed attempt 3: 404 Client Error: Not Found for url: https://raw.githubusercontent.com/NotPaul/Twitch-Ad-Blocker/master/twitch-ad-blocker.txt

@@ -1,10 +1,10 @@
 # Ultimate GOAT Merged List
 
-**Generated:** 2025-08-30 04:23:12 UTC
+**Generated:** 2025-08-30 04:35:20 UTC
 
 This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and comment lines with helpful tool links (SponsorBlock, BilibiliSponsorBlock, Spotify/Twitch tools, FilterLists, HageZi, FMHY, etc.).
 
-- **Total unique lines in merged file:** 2242169
+- **Total unique lines in merged file:** 2400503
 
 ## Sources included (curated)
 - https://easylist.to/easylist/easylist.txt
@@ -28,7 +28,6 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://someonewhocares.org/hosts/hosts
 - https://v.firebog.net/hosts/Prigent-Ads.txt
 - https://v.firebog.net/hosts/Prigent-Malware.txt
-- https://v.firebog.net/hosts/Prigent-Phishing
 - https://v.firebog.net/hosts/Prigent-Crypto.txt
 - https://v.firebog.net/hosts/AdguardDNS.txt
 - https://v.firebog.net/hosts/Easyprivacy.txt
@@ -42,7 +41,7 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
 - https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt
 - https://urlhaus.abuse.ch/downloads/hostfile/
-- https://threatfox.abuse.ch/export/hostfile/
+- https://threatfox.abuse.ch/downloads/hostfile/
 - https://phishing.army/download/phishing_army_blocklist_extended.txt
 - https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt
 - https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains
@@ -56,16 +55,15 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://www.github.developerdan.com/hosts/lists/tracking-aggressive-extended.txt
 - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
 - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt
-- https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro-plus.txt
+- https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.plus.txt
 - https://filters.adtidy.org/extension/chromium/filters/2.txt
-- https://raw.githubusercontent.com/NotPaul/Twitch-Ad-Blocker/master/twitch-ad-blocker.txt
 - https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt
 - https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
 - https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt
 
 ## Per-source fetch summary (this run)
-- https://easylist.to/easylist/easylist.txt -> 70091 lines added
-- https://easylist.to/easylist/easyprivacy.txt -> 54510 lines added
+- https://easylist.to/easylist/easylist.txt -> 70093 lines added
+- https://easylist.to/easylist/easyprivacy.txt -> 54512 lines added
 - https://easylist-downloads.adblockplus.org/easylist.txt -> 39 lines added
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt -> 6830 lines added
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt -> 4592 lines added
@@ -85,7 +83,6 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://someonewhocares.org/hosts/hosts -> 11454 lines added
 - https://v.firebog.net/hosts/Prigent-Ads.txt -> 4273 lines added
 - https://v.firebog.net/hosts/Prigent-Malware.txt -> 225902 lines added
-- https://v.firebog.net/hosts/Prigent-Phishing -> 0 lines added
 - https://v.firebog.net/hosts/Prigent-Crypto.txt -> 16238 lines added
 - https://v.firebog.net/hosts/AdguardDNS.txt -> 131096 lines added
 - https://v.firebog.net/hosts/Easyprivacy.txt -> 13870 lines added
@@ -99,7 +96,7 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt -> 2 lines added
 - https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt -> 244 lines added
 - https://urlhaus.abuse.ch/downloads/hostfile/ -> 1 lines added
-- https://threatfox.abuse.ch/export/hostfile/ -> 0 lines added
+- https://threatfox.abuse.ch/downloads/hostfile/ -> 1 lines added
 - https://phishing.army/download/phishing_army_blocklist_extended.txt -> 26523 lines added
 - https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt -> 1763 lines added
 - https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains -> 45 lines added
@@ -113,11 +110,10 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://www.github.developerdan.com/hosts/lists/tracking-aggressive-extended.txt -> 169015 lines added
 - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt -> 259 lines added
 - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt -> 352855 lines added
-- https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro-plus.txt -> 0 lines added
+- https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.plus.txt -> 158338 lines added
 - https://filters.adtidy.org/extension/chromium/filters/2.txt -> 42536 lines added
-- https://raw.githubusercontent.com/NotPaul/Twitch-Ad-Blocker/master/twitch-ad-blocker.txt -> 0 lines added
 - https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt -> 45 lines added
-- https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt -> 1059 lines added
+- https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt -> 1050 lines added
 - https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt -> 816 lines added
 
 ## Notes
