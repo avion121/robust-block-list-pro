@@ -48,6 +48,7 @@ RETRY_BACKOFF = 2  # seconds
 #   Legitimate URL Shortener / URL-cleaning lists, Hagezi, FilterLists directory, FMHY)
 #
 # Many are stable raw.githubusercontent.com, project pages, or canonical endpoints.
+
 SOURCES: List[str] = [
     # Core ad/tracking/privacy filters (adblock-style)
     "https://easylist.to/easylist/easylist.txt",
@@ -77,7 +78,7 @@ SOURCES: List[str] = [
     # Firebog (Prigent curated hosts)
     "https://v.firebog.net/hosts/Prigent-Ads.txt",
     "https://v.firebog.net/hosts/Prigent-Malware.txt",
-    "https://v.firebog.net/hosts/Prigent-Phishing.txt",
+    "https://v.firebog.net/hosts/Prigent-Phishing",   # fixed (was .txt)
     "https://v.firebog.net/hosts/Prigent-Crypto.txt",
     "https://v.firebog.net/hosts/AdguardDNS.txt",
     "https://v.firebog.net/hosts/Easyprivacy.txt",
@@ -85,7 +86,6 @@ SOURCES: List[str] = [
 
     # Blocklists and aggregators
     "https://big.oisd.nl/",
-    "https://small.oisd.nl/",
     "https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt",
     "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/hosts/hosts0",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareAdGuardHome.txt",
@@ -95,13 +95,12 @@ SOURCES: List[str] = [
 
     # Coin-miner lists
     "https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt",
-    "https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/list.txt",
-    "https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/hosts",
+   
 
     # URLhaus / malware / phishing / ransomware
     "https://urlhaus.abuse.ch/downloads/hostfile/",
-    "https://ransomwaretracker.abuse.ch/downloads/RW_DOMBL.txt",
-    "https://ransomwaretracker.abuse.ch/downloads/CW_C2_DOMBL.txt",
+    "https://threatfox.abuse.ch/export/hostfile/",
+
     "https://phishing.army/download/phishing_army_blocklist_extended.txt",
     "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt",
 
@@ -123,52 +122,23 @@ SOURCES: List[str] = [
     # WindowsSpyBlocker telemetry
     "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
 
-    # HageZi (DNS blocklists collection)
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/master/hosts/hagezi-hosts.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/master/hosts/hagezi-pro.txt",
+    # HageZi (DNS blocklists collection) - fixed paths
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro-plus.txt",
 
-    # FMHY (unsafe sites filter)
-    "https://raw.githubusercontent.com/fmhy/FMHYFilterlist/master/FMHy%20Filterlist%20Basic.txt",
-    "https://raw.githubusercontent.com/fmhy/FMHYFilterlist/master/FMHy%20Filterlist%20Plus.txt",
+    "https://filters.adtidy.org/extension/chromium/filters/2.txt",  # AdGuard English filter (fixed)
 
-    # Legitimate URL Shortener / ClearURLs-like & URL-tracker cleaning lists (Many repos)
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/lists/Actually%20Legit%20URL%20Shortener.txt",
-    "https://raw.githubusercontent.com/Universalizer/Universal-FilterLists/main/Actually%20Legitimate%20URL%20Shortener.txt",
-    # Add additional URL-tracking removal lists (ClearURLs-like)
-    "https://raw.githubusercontent.com/AdguardTeam/AdguardFilters/master/English/filter.txt",  # AdGuard filters include URL protections
-
-    # SponsorBlock / SponsorBlockServer (note: extension DB & server - include comment link fetch)
-    "https://raw.githubusercontent.com/ajayyy/SponsorBlockServer/master/README.md",
-    "https://raw.githubusercontent.com/ajayyy/SponsorBlock/master/README.md",
-
-    # BilibiliSponsorBlock
-    "https://raw.githubusercontent.com/hanydd/BilibiliSponsorBlock/master/README.md",
-
-    # Spotify/Twitch solutions (repositories; many are not pure blocklists but include rules/readmes)
-    "https://raw.githubusercontent.com/mrpond/BlockTheSpot/master/README.md",
-    "https://raw.githubusercontent.com/pixeltris/TwitchAdSolutions/master/README.md",
-    "https://raw.githubusercontent.com/SpotX-Official/SpotX/master/README.md",
 
     # Twitch-specific filterlists (uBO/AdGuard collectors)
     "https://raw.githubusercontent.com/NotPaul/Twitch-Ad-Blocker/master/twitch-ad-blocker.txt",
 
-    # Discord adblock / Disblock / community solutions (best-effort)
-    "https://raw.githubusercontent.com/ZeroDot1/Discord-Block-List/master/README.md",  # community solutions
-    "https://raw.githubusercontent.com/Perflyst/Perflyst-PiHole/master/Discord.txt",
-
-    # Popup/overlay/redirect specialist lists and scripts (BehindTheOverlay, PopUpOFF)
-    "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/README.md",  # paywall bypass project (info)
-    "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/hostnames.txt",  # some hosts used by bypass lists
-    "https://raw.githubusercontent.com/iamadamdev/bypass-paywalls-chrome/master/lists/filters.txt",
-
-    # FilterLists / index (just a pointer to the directory so users can find more)
-    "https://filterlists.com/",
 
     # Misc historical / helpful lists
     "https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
     "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
     "https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt",
 ]
+
 
 # ----------------------------
 # Helper utilities & regex
