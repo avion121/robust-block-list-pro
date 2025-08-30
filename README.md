@@ -1,6 +1,6 @@
 # Ultimate Robust Blocklist Pro
 
-**Generated:** 2025-08-30 08:39:49 UTC
+**Generated:** 2025-08-30 08:42:17 UTC
 
 This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and helpful tool links.
 
