@@ -124,7 +124,7 @@ SOURCES: List[str] = [
 
     # HageZi (DNS blocklists collection) - fixed paths
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.plus.txt",
+    
 
     "https://filters.adtidy.org/extension/chromium/filters/2.txt",  # AdGuard English filter (fixed)
 
