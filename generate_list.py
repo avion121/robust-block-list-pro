@@ -78,7 +78,7 @@ SOURCES: List[str] = [
     # Firebog (Prigent curated hosts)
     "https://v.firebog.net/hosts/Prigent-Ads.txt",
     "https://v.firebog.net/hosts/Prigent-Malware.txt",
-    "https://v.firebog.net/hosts/Prigent-Phishing",   # fixed (was .txt)
+    
     "https://v.firebog.net/hosts/Prigent-Crypto.txt",
     "https://v.firebog.net/hosts/AdguardDNS.txt",
     "https://v.firebog.net/hosts/Easyprivacy.txt",
@@ -99,7 +99,7 @@ SOURCES: List[str] = [
 
     # URLhaus / malware / phishing / ransomware
     "https://urlhaus.abuse.ch/downloads/hostfile/",
-    "https://threatfox.abuse.ch/export/hostfile/",
+    "https://threatfox.abuse.ch/downloads/hostfile/",
 
     "https://phishing.army/download/phishing_army_blocklist_extended.txt",
     "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt",
@@ -124,14 +124,9 @@ SOURCES: List[str] = [
 
     # HageZi (DNS blocklists collection) - fixed paths
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro-plus.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/hosts/pro.plus.txt",
 
     "https://filters.adtidy.org/extension/chromium/filters/2.txt",  # AdGuard English filter (fixed)
-
-
-    # Twitch-specific filterlists (uBO/AdGuard collectors)
-    "https://raw.githubusercontent.com/NotPaul/Twitch-Ad-Blocker/master/twitch-ad-blocker.txt",
-
 
     # Misc historical / helpful lists
     "https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
