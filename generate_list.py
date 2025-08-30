@@ -156,8 +156,9 @@ SOURCES: List[str] = [
     "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts",
     "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts",
     
-    # Dandelion Sprout's Anti-Malware List (corrected URL)
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/AntiMalwareHosts.txt",
+    # Additional malware protection (replacing Dandelion Sprout)
+    "https://mirror1.malwaredomains.com/files/justdomains",
+    "https://phish.sinkhole.org/blacklist.txt",
 ]
 
 # ----------------------------
@@ -302,7 +303,7 @@ def generate_merged(sources: List[str]) -> Tuple[Dict[str,int], int, List[str]]:
         "# - Emerging Threats (fingerprinting, analytics, session replay)",
         "#",
         "# SOURCES: EasyList, EasyPrivacy, uBlock Origin, AdGuard, hagezi,",
-        "# Dandelion Sprout, Firebog, StevenBlack, Disconnect.me, URLhaus, Phishing Army,",
+        "# Firebog, StevenBlack, Disconnect.me, URLhaus, Phishing Army,",
         "# BlocklistProject, DeveloperDan, and many more...",
     ]
     
