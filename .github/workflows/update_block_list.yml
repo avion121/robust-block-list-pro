@@ -1,4 +1,4 @@
-name: Update Block Lists
+name: Update Block Lists (Ultimate GOAT - single merged)
 
 on:
   schedule:
@@ -18,15 +18,22 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: pip install requests
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
       - name: Run generator
         run: python generate_list.py
 
       - name: Commit and push changes
+        env:
+          GIT_AUTHOR_NAME: "github-actions[bot]"
+          GIT_AUTHOR_EMAIL: "github-actions[bot]@users.noreply.github.com"
+          GIT_COMMITTER_NAME: "github-actions[bot]"
+          GIT_COMMITTER_EMAIL: "github-actions[bot]@users.noreply.github.com"
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add robust_block_list_pro_combined.txt robust_block_list_ios_lite.txt README.md fetch_errors.log
-          git commit -m "Update combined block list & metadata - $(date -u '+%Y-%m-%d %H:%M:%S UTC')" || echo "No changes"
-          git push
+          git config --global user.name "${GIT_AUTHOR_NAME}"
+          git config --global user.email "${GIT_AUTHOR_EMAIL}"
+          git add ultimate_goat_merged.txt README.md fetch_errors.log || true
+          git commit -m "Update ultimate GOAT merged list - $(date -u '+%Y-%m-%d %H:%M:%S UTC')" || echo "No changes to commit"
+          git push || (echo "git push failed" && exit 0)
