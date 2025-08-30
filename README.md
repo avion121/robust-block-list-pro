@@ -1,6 +1,6 @@
 # ULTIMATE TRUE GOAT BLOCK LIST
 
-**Generated:** 2025-08-30 12:15:44 UTC
+**Generated:** 2025-08-30 12:22:02 UTC
 
 This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and helpful tool links.
 
@@ -85,7 +85,7 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/DandelionSprout/adfilt/master/AntiMalwareHosts.txt
 
 ## Per-source fetch summary (this run)
-- https://easylist.to/easylist/easylist.txt -> 70179 lines added
+- https://easylist.to/easylist/easylist.txt -> 70182 lines added
 - https://easylist.to/easylist/easyprivacy.txt -> 54511 lines added
 - https://easylist-downloads.adblockplus.org/easylist.txt -> 39 lines added
 - https://easylist-downloads.adblockplus.org/easyprivacy.txt -> 102 lines added
@@ -96,17 +96,17 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt -> 2665 lines added
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt -> 4 lines added
 - https://filters.adtidy.org/extension/chromium/filters/1.txt -> 17123 lines added
-- https://filters.adtidy.org/extension/chromium/filters/2.txt -> 47867 lines added
+- https://filters.adtidy.org/extension/chromium/filters/2.txt -> 47866 lines added
 - https://filters.adtidy.org/extension/chromium/filters/3.txt -> 91571 lines added
 - https://filters.adtidy.org/extension/chromium/filters/4.txt -> 15129 lines added
 - https://filters.adtidy.org/extension/chromium/filters/14.txt -> 51108 lines added
 - https://filters.adtidy.org/extension/chromium/filters/16.txt -> 16058 lines added
-- https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt -> 20509 lines added
+- https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt -> 20506 lines added
 - https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/data/combined_disguised_trackers.txt -> 14033 lines added
 - https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains -> 65 lines added
 - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt -> 37 lines added
 - https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt -> 2701 lines added
-- https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt -> 45004 lines added
+- https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt -> 45005 lines added
 - https://easylist-downloads.adblockplus.org/fanboy-social.txt -> 2 lines added
 - https://easylist-downloads.adblockplus.org/fanboy-notifications.txt -> 2 lines added
 - https://secure.fanboy.co.nz/fanboy-cookiemonster.txt -> 4 lines added
