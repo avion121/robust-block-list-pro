@@ -1,10 +1,10 @@
 # Ultimate Robust Blocklist Pro
 
-**Generated:** 2025-08-30 07:20:48 UTC
+**Generated:** 2025-08-30 07:45:33 UTC
 
-This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and comment lines with helpful tool links.
+This repository contains one single merged file `ultimate_goat_merged.txt` that includes domains, hosts-format entries, adblock/filter rules, and helpful tool links.
 
-- **Total unique lines in merged file:** 2242279
+- **Total unique lines in merged file:** 2242285
 
 ## Sources included
 - https://easylist.to/easylist/easylist.txt
@@ -61,8 +61,8 @@ This repository contains one single merged file `ultimate_goat_merged.txt` that 
 - https://raw.githubusercontent.com/anudeepND/blacklist/master/CoinMiner.txt
 
 ## Per-source fetch summary (this run)
-- https://easylist.to/easylist/easylist.txt -> 70123 lines added
-- https://easylist.to/easylist/easyprivacy.txt -> 54513 lines added
+- https://easylist.to/easylist/easylist.txt -> 70131 lines added
+- https://easylist.to/easylist/easyprivacy.txt -> 54511 lines added
 - https://easylist-downloads.adblockplus.org/easylist.txt -> 39 lines added
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt -> 6830 lines added
 - https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt -> 4592 lines added
